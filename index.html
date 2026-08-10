@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="vi"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Sơ đồ Giải pháp Dữ liệu &amp; AI — Công Ty Tnhh Đông Dương Sài Gòn</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#f4f5f9;font-family:'Be Vietnam Pro',sans-serif;color:#111;min-height:100vh}
+.page{padding:22px 18px 40px;max-width:1820px;margin:0 auto}
+h1{font-size:20px;font-weight:800;text-align:center;letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px}
+.h1sub{text-align:center;font-size:11px;color:#999;margin-bottom:18px;letter-spacing:.02em}
+.card{background:#fff;border:1px solid #dce0ee;border-radius:12px;overflow:hidden}
+/* HEADER ROW */
+.hrow{display:grid;grid-template-columns:210px 1fr 200px 1fr;border-bottom:2px solid #e4e8f4}
+.hcell{padding:9px 12px;text-align:center;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#222;display:flex;align-items:center;justify-content:center;gap:6px;border-right:1px solid #e4e8f4}
+.hcell:last-child{border-right:none}
+.hn{color:#fff;font-size:8px;padding:2px 7px;border-radius:10px;letter-spacing:.06em;font-weight:700;flex-shrink:0}
+/* MAIN GRID */
+.mgrid{display:grid;grid-template-columns:210px 1fr 200px 1fr;align-items:start;position:relative}
+.mcell{padding:14px 12px;border-right:1px solid #e4e8f4;position:relative}
+.mcell:last-child{border-right:none}
+.ov-svg{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:2;overflow:visible}
+/* ZONE */
+.zone{border:1.5px dashed;border-radius:10px;padding:10px 9px}
+/* SOURCE LIST */
+.srclist{display:flex;flex-direction:column;gap:6px}
+.srow{display:flex;align-items:flex-start;gap:6px}
+.sico{font-size:15px;flex-shrink:0;margin-top:1px}
+.sbox{flex:1;min-width:0;border:1.5px solid #f5a623;border-radius:7px;padding:5px 8px;background:#fff9f0;cursor:pointer;transition:all .12s;text-align:left}
+.sbox:hover{background:#fff0d0;transform:translateY(-1px)}
+.sbox.active{border-color:#e8440a;background:#fff0d0;box-shadow:0 0 0 3px rgba(232,68,10,.12)}
+.sbox .snm{font-size:10.5px;font-weight:700;color:#111;line-height:1.25}
+.sbox .spu{font-size:8.5px;color:#888;margin-top:1px;line-height:1.2}
+.stag{display:inline-block;font-size:7.5px;font-weight:700;padding:1px 5px;border-radius:8px;margin-top:3px;letter-spacing:.02em}
+.st-ok{background:#e2f7ef;color:#1a9e6c}
+.st-cond{background:#fff3dc;color:#a06000}
+.st-manual{background:#fde8e8;color:#c0392b}
+.blbl{font-size:8.5px;color:#bbb;text-align:center;margin-top:6px;font-style:italic}
+/* COL2 */
+.c2top{display:flex;align-items:center;gap:5px;flex-wrap:nowrap}
+.dp-ann{display:flex;flex-direction:column;align-items:center;gap:2px;flex-shrink:0}
+.dp-lbl{font-size:9px;color:#3d6ef5;font-weight:600;white-space:nowrap;text-align:center}
+.dp-sub{font-size:8px;color:#aaa;white-space:nowrap}
+.etl-lbl{font-size:9px;color:#e8440a;font-weight:700;text-align:center}
+.bx{border:1.5px solid #f5a623;border-radius:8px;padding:8px 10px;background:#fff9f0;cursor:pointer;transition:all .14s;text-align:center;display:block;width:100%}
+.bx:hover{background:#fff0d0;transform:translateY(-1px);box-shadow:0 2px 8px rgba(245,166,35,.2)}
+.bx.active{border-color:#e8440a!important;background:#fff0d0!important;box-shadow:0 0 0 3px rgba(232,68,10,.12)!important}
+.bx.bl{border-color:#3d6ef5;background:#f0f4ff}.bx.bl:hover{background:#e8edff}
+.bx.gr{border-color:#2dc98a;background:#f0faf5}.bx.gr:hover{background:#e2f7ef}
+.bx.pu{border-color:#7c5cfc;background:#f8f5ff}.bx.pu:hover{background:#f0eaff}
+.bn{font-size:11px;font-weight:600;color:#111;line-height:1.3}
+.bt{font-size:9.5px;font-weight:600;margin-top:2px}
+.bx.bl .bt{color:#3d6ef5}.bx.gr .bt{color:#1a9e6c}.bx.pu .bt{color:#5830d8}
+.bx:not(.bl):not(.gr):not(.pu) .bt{color:#e8440a}
+.bs{font-size:9px;color:#999;margin-top:2px;line-height:1.3}
+.harr{display:flex;align-items:center;gap:0}
+.hl{height:2px;background:#ddd;flex:1;position:relative;min-width:10px}
+.hl .pk{position:absolute;top:-3px;width:6px;height:6px;border-radius:50%;animation:pkH var(--d,2s) linear infinite;animation-delay:var(--dl,0s)}
+@keyframes pkH{0%{left:-3px;opacity:0}12%{opacity:1}88%{opacity:1}100%{left:calc(100% - 3px);opacity:0}}
+.hat{font-size:9px;color:#bbb;flex-shrink:0}
+.vc{display:flex;flex-direction:column;align-items:center}
+.vl{width:2px;background:#ddd;position:relative}
+.vl .pk{position:absolute;left:-3px;width:6px;height:6px;border-radius:50%;animation:pkV var(--d,2s) linear infinite;animation-delay:var(--dl,0s)}
+@keyframes pkV{0%{top:-3px;opacity:0}12%{opacity:1}88%{opacity:1}100%{top:calc(100% - 3px);opacity:0}}
+.vt{font-size:10px;color:#bbb;text-align:center;line-height:1}
+/* COL3 marts */
+.c3wrap{display:flex;flex-direction:column;gap:8px}
+.c3row{display:flex;align-items:center;gap:6px}
+.bx.pu.small{padding:6px 9px}
+/* COL4 AI summary bubbles */
+.ai-sumwrap{display:flex;flex-direction:column;gap:6px}
+.ai-bubble{border-radius:7px;padding:6px 9px;font-size:10.5px;font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:6px}
+.ai-bubble .cnt{font-size:8.5px;font-weight:700;padding:1px 6px;border-radius:8px;background:rgba(255,255,255,.65)}
+.ai-cta{margin-top:8px;display:block;width:100%;text-align:center;padding:9px 8px;border-radius:8px;background:#111;color:#fff;font-size:11px;font-weight:700;cursor:pointer;border:none;letter-spacing:.02em}
+.ai-cta:hover{background:#2a2a2a}
+/* CALLOUT */
+.callout{border-radius:10px;padding:12px 14px;font-size:11.5px;line-height:1.55;margin-bottom:14px}
+.callout.amber{background:#fff8ec;border:1px solid #f5c060;color:#7a4c00}
+.callout.blue{background:#f0f5ff;border:1px solid #b8cdf5;color:#1a3d80}
+.callout b{font-weight:700}
+/* TABS */
+.tabnav{display:flex;gap:4px;padding:10px 20px 0;background:#f4f5f9;border-bottom:2px solid #e4e8f4;flex-wrap:wrap}
+.tabnav a{font-size:11px;font-weight:600;padding:7px 14px;border-radius:6px 6px 0 0;color:#888;background:#eef0f8;border:1px solid #e4e8f4;border-bottom:none;cursor:pointer;transition:all .12s;text-decoration:none;display:block}
+.tabnav a.on{background:#fff;color:#2060c0;border-color:#e4e8f4;border-bottom:2px solid #fff;margin-bottom:-2px}
+.tabpage{display:none}.tabpage.on{display:block}
+/* DETAIL PAGE */
+.dp-page{padding:22px 30px 40px;max-width:1440px;margin:0 auto}
+.dp-section{margin-bottom:30px}
+.dp-sec-title{font-size:15px;font-weight:700;color:#222;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid #e4e8f4;display:flex;align-items:center;gap:8px}
+.dp-sec-title .hn2{color:#fff;font-size:9px;padding:2px 8px;border-radius:10px;font-weight:700}
+.dp-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.dp-card{border:1px solid #e4e8f4;border-radius:10px;padding:14px 16px;background:#fff}
+.dp-card-title{font-size:13px;font-weight:600;color:#111;margin-bottom:4px}
+.dp-card-sub{font-size:11px;color:#3d6ef5;font-weight:500;margin-bottom:8px}
+.dp-card-body{font-size:11px;color:#666;line-height:1.55}
+.dp-card-body li{margin-left:14px;margin-bottom:2px}
+.dp-note{margin-top:10px;padding:8px 10px;border-radius:6px;font-size:10px}
+/* UC TABLE / GROUPS */
+.uc-group{border:1px solid #e4e8f4;border-radius:9px;overflow:hidden;margin-bottom:10px}
+.uc-head{padding:7px 11px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid #e4e8f4;color:#fff}
+.uc-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;padding:8px}
+.uc-item{border:1px solid;border-radius:6px;padding:7px 9px;cursor:pointer;transition:all .12s}
+.uc-item:hover{transform:translateY(-1px)}
+.uc-item.active{box-shadow:0 0 0 2px}
+.uc-id{font-size:8.5px;font-weight:700;letter-spacing:.05em}
+.uc-name{font-size:10.5px;font-weight:600;color:#111;line-height:1.28;margin-top:2px}
+.uc-period{font-size:8.5px;color:#999;margin-top:3px}
+/* ROLE TABLE */
+.role-table{width:100%;border-collapse:collapse;font-size:11.5px}
+.role-table th{background:#f4f5f9;padding:8px 12px;text-align:left;font-weight:700;color:#555;border-bottom:2px solid #e4e8f4}
+.role-table td{padding:8px 12px;border-bottom:1px solid #f0f0f4;color:#333;vertical-align:top}
+.role-chip{display:inline-block;font-size:9.5px;font-weight:700;padding:2px 9px;border-radius:11px;color:#fff}
+/* PERMISSION MATRIX */
+.perm-wrap{overflow-x:auto;border:1px solid #e4e8f4;border-radius:10px}
+.perm-table{border-collapse:collapse;font-size:10.5px;min-width:920px;width:100%}
+.perm-table th,.perm-table td{border-bottom:1px solid #eef0f6;border-right:1px solid #eef0f6;padding:6px 8px;text-align:center}
+.perm-table th{background:#f4f5f9;font-weight:700;color:#444;font-size:9.5px;white-space:nowrap}
+.perm-table td.dom{text-align:left;font-weight:600;color:#222;background:#fafbfe;white-space:nowrap;position:sticky;left:0}
+.perm-table th.dom{text-align:left;background:#eef0f8;position:sticky;left:0;z-index:1}
+.pv1{color:#1a9e6c;font-weight:800}
+.pv2{color:#c0900f;font-weight:800}
+.pv0{color:#ccc}
+.plock{font-size:8px;vertical-align:2px}
+.perm-legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;font-size:10.5px;color:#555}
+.perm-legend>span{margin-right:16px;display:inline-flex;align-items:center}
+.perm-legend span.k{font-weight:800;margin-right:4px}
+/* SCOPE CARDS */
+.scope-card{border-radius:10px;padding:14px 16px;border:1.5px solid;background:#fff}
+.scope-title{font-size:13px;font-weight:700;margin-bottom:2px}
+.scope-who{font-size:10.5px;font-weight:600;margin-bottom:8px;opacity:.85}
+.scope-desc{font-size:11px;color:#555;line-height:1.5;margin-bottom:8px}
+.scope-ok,.scope-no{font-size:10.5px;line-height:1.6;margin-bottom:4px}
+.scope-ok b,.scope-no b{font-size:9px;text-transform:uppercase;letter-spacing:.05em}
+/* LEVEL TABLE */
+.level-row{display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:8px;margin-bottom:6px}
+.level-badge{font-size:10px;font-weight:800;padding:3px 10px;border-radius:6px;flex-shrink:0;min-width:26px;text-align:center}
+.level-name{font-size:11.5px;font-weight:700;min-width:110px}
+.level-desc{font-size:11px;color:#555}
+/* EXAMPLE PANEL */
+.example-panel{border:1px solid #e4e8f4;border-radius:10px;padding:16px 18px;background:#fafbff}
+.example-q{font-size:12.5px;font-weight:700;color:#111;margin-bottom:12px;padding:8px 12px;background:#fff;border-radius:8px;border:1px dashed #c8d0ea;display:inline-block}
+.example-row{display:flex;gap:10px;padding:8px 0;border-top:1px solid #eef0f6}
+.example-row:first-of-type{border-top:none}
+.example-role{font-size:10.5px;font-weight:700;color:#3d6ef5;min-width:160px;flex-shrink:0;margin-right:10px}
+.example-ans{font-size:11px;color:#444;line-height:1.55}
+/* CLAUDE FLOW */
+.claude-flow{display:flex;align-items:stretch;gap:0;flex-wrap:wrap}
+.cf-step{border:1px solid #e4e8f4;border-radius:8px;padding:14px 16px;background:#fff;min-width:180px;flex:1}
+.cf-step-num{font-size:9px;font-weight:700;color:#7c5cfc;margin-bottom:6px;letter-spacing:.08em}
+.cf-step-title{font-size:14px;font-weight:700;color:#111;margin-bottom:5px}
+.cf-step-body{font-size:11px;color:#666;line-height:1.55}
+.cf-arr{display:flex;align-items:center;padding:0 10px;font-size:20px;color:#bbb;flex-shrink:0}
+/* LEGEND / DRAWER */
+.legend{padding:8px 20px;background:#fafbfe;border-top:1px solid #eef0f8;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.leg-item{display:flex;align-items:center;gap:6px;font-size:11px;color:#555}
+.drawer{display:none;border-top:2px solid #f5a623;padding:16px 20px;background:#fffcf7;animation:su .16s ease}
+@keyframes su{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.dhead{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px}
+.dbadge{font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:3px;background:#fff3dc;color:#c06000;border:1px solid #f5c060;flex-shrink:0;margin-top:2px}
+.dname{font-size:16px;font-weight:700;color:#111;line-height:1.2}
+.dtech{font-size:11px;color:#888;margin-top:2px}
+.dclose{margin-left:auto;width:24px;height:24px;border-radius:50%;border:1px solid #ddd;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;color:#aaa;flex-shrink:0}
+.dclose:hover{background:#fee;color:#c00}
+.dbody{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.dlbl{font-size:8px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#ccc;margin-bottom:6px}
+.drow{display:flex;gap:5px;padding:3px 0;border-bottom:1px solid #f5f0e8}
+.drow:last-child{border-bottom:none}
+.ddot{width:4px;height:4px;border-radius:50%;background:#f5a623;flex-shrink:0;margin-top:4px}
+.dtext{font-size:11px;color:#555;line-height:1.5}
+@media(max-width:900px){.mgrid,.hrow{grid-template-columns:1fr}.mcell,.hcell{border-right:none;border-bottom:1px solid #e4e8f4}.dbody{grid-template-columns:1fr}}
+/* ===================== WAREHOUSE-CENTRIC DIAGRAM ===================== */
+.dw-wrap{padding:26px 20px 34px;background:#fff}
+.dw-head{text-align:center;margin-bottom:8px}
+.dw-h2{font-size:24px;font-weight:800;letter-spacing:.01em;color:#0e2a52}
+.dw-h2 .accent{color:#e8630a}
+.dw-sub{font-size:12.5px;color:#5a6b8c;margin-top:4px;font-weight:600}
+.dw-cols{display:flex;align-items:flex-start;gap:0;margin-top:26px;position:relative}
+.dw-colA{flex:0 0 200px}
+.dw-colC{flex:0 0 400px}
+.dw-colB{flex:1;padding:0 6px;display:flex;flex-direction:column;align-items:center;min-width:0}
+.dw-lbl{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#0e2a52;margin-bottom:4px;white-space:nowrap}
+.dw-lbl::after{content:'';display:block;width:34px;height:3px;background:#e8630a;border-radius:2px;margin-top:5px}
+.dw-colC .dw-lbl{margin-left:auto}
+.mart-overlay{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:visible}
+.src-card{position:relative;background:#fff;border:1.5px solid #d8dfee;border-radius:11px;padding:8px 12px;margin-bottom:10px;box-shadow:0 2px 6px rgba(20,40,90,.05);cursor:pointer;transition:all .15s}
+.src-card:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(20,40,90,.1)}
+.src-card.active{border-color:#e8630a;box-shadow:0 0 0 3px rgba(232,99,10,.12)}
+.src-card .sc-top{display:flex;align-items:flex-start;gap:9px}
+.src-card .sc-ic{width:32px;height:32px;border-radius:8px;background:#eef2fb;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;overflow:hidden;padding:3px;margin-top:1px}
+.src-card .sc-ic img{max-width:100%;max-height:100%;object-fit:contain}
+.src-card .sc-body{flex:1;min-width:0}
+.src-card .sc-name-row{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap}
+.src-card .sc-name{font-size:11.5px;font-weight:700;color:#0e2a52}
+.src-card .sc-sub{font-size:9px;color:#8b96b3;margin-top:1px}
+.src-card .sc-status{font-size:8px;font-weight:700;padding:1px 6px;border-radius:8px;white-space:nowrap;display:inline-block}
+/* mini pipe connector: a real animated pipe segment per source, replacing plain line+dot */
+.mini-pipe-wrap{position:absolute;right:-198px;top:50%;transform:translateY(-50%);width:198px;height:16px;z-index:1}
+.mini-pipe{width:100%;height:100%;border-radius:8px;border:1.5px solid #7186b5;background:linear-gradient(180deg,#eef2fb 0%,#c3cfe8 45%,#95a8d6 60%,#eef2fb 100%);position:relative;overflow:hidden}
+.mini-pipe::after{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.75) 0 6px,transparent 6px 15px);animation:pipeflow .8s linear infinite}
+@keyframes pipeflow{from{background-position:0 0}to{background-position:-30px 0}}
+.pipe-lbl-first{position:absolute;left:50%;bottom:100%;transform:translateX(-50%);margin-bottom:5px;width:190px;font-size:10.5px;font-weight:800;color:#5a6b8c;letter-spacing:.02em;line-height:1.35;text-align:center;white-space:normal}
+.dw-arrow-down{font-size:16px;color:#7186b5;margin:3px 0;text-align:center;align-self:flex-start;margin-left:478px}
+.dw-house{width:100%;max-width:540px;display:flex;flex-direction:column;align-self:flex-start;margin-left:190px}
+.dw-roof{align-self:center;box-sizing:content-box;width:0;height:0;border-left:300px solid transparent;border-right:300px solid transparent;border-bottom:70px solid #0e2a52;margin:0}
+.dw-body{background:#fff;border:3px solid #0e2a52;border-top:none;margin-top:-1px;padding:22px 30px 20px}
+.dw-body-title{text-align:center;font-size:24px;font-weight:800;color:#0e2a52;letter-spacing:.02em}
+.dw-body-sub{text-align:center;font-size:12.5px;color:#8b96b3;font-weight:600;margin-bottom:18px}
+.dw-body-sub .u{display:inline-block;width:32px;height:3px;background:#e8630a;border-radius:2px;margin:4px auto 0;vertical-align:middle}
+.dw-domrow{position:relative;display:flex;align-items:center;justify-content:center;gap:14px;padding:19px 18px;border:1px solid #eef0f6;border-radius:9px;margin-bottom:13px;background:#fafbff;font-size:16px;font-weight:700;text-align:center;color:#222;cursor:pointer;transition:all .12s}
+.dw-domrow:hover{background:#f0f4ff;transform:translateX(1px)}
+.dw-domrow.active{border-color:#e8630a;box-shadow:0 0 0 2px rgba(232,99,10,.12)}
+.dw-domrow .ic{font-size:20px;flex-shrink:0}
+.dw-base{height:16px;background:linear-gradient(180deg,#e8630a,#c94f00);margin-top:2px}
+/* Data mart stack + technical animated connectors out of the warehouse */
+.martai-row{display:flex;align-items:center;gap:0;width:100%;position:relative;margin-top:20px}
+.mart-stack{display:flex;flex-direction:column;gap:13px;flex:1;min-width:0}
+.mart-card{position:relative;background:#f8f5ff;border:1.5px solid #c9b8f5;border-radius:11px;padding:14px 22px;cursor:pointer;transition:all .15s;width:100%}
+.mart-card:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(124,92,252,.15)}
+.mart-card.active{border-color:#7c5cfc;box-shadow:0 0 0 3px rgba(124,92,252,.15)}
+.mart-card .mc-name{font-size:13.5px;font-weight:700;color:#0e2a52;line-height:1.3}
+.mart-card .mc-sub{font-size:10.5px;color:#8261e0;font-weight:600;margin-top:3px}
+.mart-bus{position:relative;width:22px;align-self:stretch;flex-shrink:0}
+.mart-bus::before{content:'';position:absolute;top:6px;bottom:6px;left:9px;width:2.5px;background:#e8630a;border-radius:2px}
+.mart-bus-arrow{position:absolute;top:50%;left:9px;width:13px;height:2.5px;background:#e8630a;transform:translateY(-50%)}
+.mart-bus-arrow::after{content:'';position:absolute;right:-1px;top:50%;transform:translateY(-50%);width:0;height:0;border-top:4px solid transparent;border-bottom:4px solid transparent;border-left:6px solid #e8630a}
+.ai-plug-col{flex-shrink:0;padding-left:10px}
+.ai-card{background:linear-gradient(135deg,#fff4ec,#fff);border:2px solid #e8630a;border-radius:14px;padding:16px 14px;text-align:center;cursor:pointer;transition:all .15s;width:160px}
+.ai-card:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(232,99,10,.18)}
+.ai-card .ai-ic{width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid #eee;color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;margin:0 auto 8px;overflow:hidden}
+.ai-card .ai-name{font-size:13px;font-weight:800;color:#0e2a52;line-height:1.25}
+.ai-card .ai-sub{font-size:9px;color:#a06000;font-weight:600;margin-top:4px;line-height:1.4}
+.dw-highlights{display:flex;gap:0;margin-top:30px;border-top:2px solid #eef0f6;border-bottom:2px solid #eef0f6;background:#fafbff}
+.dw-hi{flex:1;display:flex;align-items:flex-start;gap:10px;padding:16px 18px;border-right:1px solid #eef0f6}
+.dw-hi:last-child{border-right:none}
+.dw-hi-ic{width:38px;height:38px;border-radius:50%;background:#eef2fb;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.dw-hi-title{font-size:11.5px;font-weight:700;color:#0e2a52;line-height:1.3}
+.dw-hi-sub{font-size:9.5px;color:#8b96b3;margin-top:3px;line-height:1.4}
+/* ===================== PERMISSION FLOW (AI TAB) ===================== */
+.pflow{display:flex;align-items:stretch;gap:0;margin-bottom:16px;flex-wrap:wrap}
+.pflow-box{flex:1;min-width:170px;border-radius:10px;padding:14px 14px;text-align:center;border:1.5px solid}
+.pflow-ic{font-size:22px;margin-bottom:6px}
+.pflow-title{font-size:12px;font-weight:800;margin-bottom:4px}
+.pflow-sub{font-size:10px;line-height:1.5}
+.pflow-arr{display:flex;align-items:center;justify-content:center;font-size:20px;color:#bbb;padding:0 6px;flex:0 0 26px}
+.mart-chip-row{display:flex;align-items:center;gap:10px;padding:8px 4px;flex-wrap:wrap}
+.mart-chip-role{font-size:10.5px;font-weight:800;min-width:150px;flex-shrink:0}
+.mart-chip{font-size:9px;font-weight:700;padding:4px 9px;border-radius:8px;white-space:nowrap}
+.mc-full{background:#e2f7ef;color:#1a9e6c}
+.mc-part{background:#fff3dc;color:#a06000}
+.mc-none{background:#f2f2f5;color:#bbb}
+@media(max-width:900px){.dw-cols{flex-direction:column}.dw-colA,.dw-colC{flex:1;width:100%}.dw-house,.dw-pipe-wrap{max-width:100%}}
+/* ===== REDESIGN: Solution diagram (3-zone layout) ===== */
+.story3{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.story3-pill{display:flex;align-items:center;gap:9px;border-radius:999px;padding:8px 16px;background:#fff;border:1.5px solid #e4e8f4;min-width:0}
+.story3-pill.w-left{flex:0 0 215px}
+.story3-pill.w-center{flex:1 1 auto}
+.story3-pill.w-right{flex:0 0 315px}
+.story3-num{flex-shrink:0;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:800}
+.story3-txt{min-width:0;flex:1}
+.story3-t{font-size:10.5px;font-weight:800;letter-spacing:.03em;color:#111;line-height:1.2}
+.story3-d{font-size:9px;color:#666;margin-top:2px;line-height:1.25}
+.story3-arrow{display:flex;align-items:center;color:#bbb;font-size:16px;flex-shrink:0}
+.story3-pill.c-blue{border-color:#c8d8fb}
+.story3-pill.c-blue .story3-num{background:#eaf0ff;color:#3d6ef5;border:1.5px solid #3d6ef5}
+.story3-pill.c-orange{border-color:#f5c060;background:#fff4e8}
+.story3-pill.c-orange .story3-num{background:#e8630a;color:#fff}
+.story3-pill.c-orange .story3-d{color:#8a5a10}
+.story3-pill.c-purple{border-color:#d8c8fb}
+.story3-pill.c-purple .story3-num{background:#f0eaff;color:#7c5cfc;border:1.5px solid #7c5cfc}
+.sol-zones{display:flex;gap:18px;align-items:center;position:relative}
+.zone-left{flex:0 0 215px;display:flex;flex-direction:column;gap:8px}
+.zone-center{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:8px;margin-left:44px}
+.zone-right{flex:0 0 315px;margin-left:48px}
+.zone-box{border:1.5px dashed #c8d0ea;border-radius:12px;padding:9px}
+.zone-box.navy{border-color:#0e2a5255;background:#f7f9ff}
+.zone-title{font-size:9.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#0e2a52;margin-bottom:7px;text-align:center}
+.src-grid{display:flex;flex-direction:column;gap:7px}
+.src-chip{display:flex;align-items:center;gap:5px;border:1.5px solid #f5a623;border-radius:7px;padding:7px 7px;background:#fff9f0;cursor:pointer;transition:all .12s}
+.src-chip:hover{background:#fff0d0;transform:translateY(-1px)}
+.src-chip.manual{border-color:#e07b7b;background:#fff3f0}
+.src-chip.active{border-color:#e8440a;box-shadow:0 0 0 2px rgba(232,68,10,.15)}
+.src-chip .ic{font-size:12px;flex-shrink:0}
+.src-chip .nm{font-size:9px;font-weight:700;color:#111;line-height:1.15;flex:1;min-width:0}
+.src-chip .tag{font-size:7px;font-weight:800;padding:1px 4px;border-radius:6px;flex-shrink:0}
+.hub-arrow{text-align:center;color:#3d6ef5;font-size:9px;font-weight:700;line-height:1.4}
+.hub-arrow .a{display:block;font-size:18px;line-height:1}
+.pipeline-row{display:flex;align-items:center;gap:1px}
+.pipe-step{flex:1;text-align:center;background:#0e2a52;color:#fff;border-radius:7px;padding:7px 3px;font-size:9px;font-weight:700;letter-spacing:.01em}
+.pipe-step .n{font-size:6.5px;opacity:.6;font-weight:800;display:block;margin-bottom:1px}
+.pipe-arrow{color:#e8440a;font-size:12px;flex-shrink:0}
+.dq-panel{border:1.5px solid #e8440a;border-radius:10px;background:#fff5f0;padding:8px 10px}
+.dq-title{font-size:9px;font-weight:800;color:#e8440a;letter-spacing:.03em;text-transform:uppercase;margin-bottom:6px}
+.dq-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px}
+.dq-item{font-size:8.5px;color:#333;display:flex;align-items:center;gap:3px;white-space:nowrap}
+.dq-item .c{color:#1a9e6c;font-weight:800}
+.dwh-hero{border:2px solid #0e2a52;border-radius:13px;background:linear-gradient(180deg,#0e2a52,#173a70);padding:13px 16px;color:#fff;box-shadow:0 4px 14px rgba(14,42,82,.15)}
+.dwh-hero-title{text-align:center;font-size:17px;font-weight:800;letter-spacing:.04em}
+.dwh-hero-sub{text-align:center;font-size:9.5px;color:#bcd2ff;margin-bottom:8px}
+.dwh-tiers{display:flex;flex-direction:column;gap:5px}
+.dwh-tier{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:7px 10px}
+.dwh-tier-lbl{font-size:9.5px;font-weight:800;color:#a9c8ff;letter-spacing:.03em;text-transform:uppercase;text-align:center}
+.dwh-tier.bdm{background:rgba(124,92,252,.2);border-color:rgba(124,92,252,.55)}
+.dwh-dom-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:5px}
+.dwh-dom-chip{font-size:9.5px;font-weight:600;background:rgba(255,255,255,.12);border-radius:6px;padding:6px 7px;cursor:pointer;text-align:center;transition:background .12s}
+.dwh-dom-chip:hover{background:rgba(255,255,255,.25)}
+.dwh-tier-arrow{text-align:center;color:#a9c8ff;font-size:10px}
+.ai-endpoint{font-size:20px;display:flex;align-items:center;justify-content:center;width:100%;height:100%}
+@media(max-width:1000px){.sol-zones{flex-direction:column}.zone-left,.zone-right{flex:1 1 auto}.story3{flex-direction:column}.story3-pill.w-left,.story3-pill.w-center,.story3-pill.w-right{flex:1 1 auto}.story3-arrow{transform:rotate(90deg);justify-content:center}}
+.zone-right{padding-top:2px}
+.zone-right .dw-lbl{font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#5830d8;text-align:center;margin-bottom:6px}
+.zone-right .martai-row{margin-top:0}
+.zone-right .mart-stack{gap:8px}
+.zone-right .mart-card{padding:8px 10px;border-radius:9px}
+.zone-right .mc-name{font-size:10px;line-height:1.25}
+.zone-right .mc-sub{font-size:8.5px!important;margin-top:2px!important}
+.zone-right .ai-plug-col{padding-left:6px}
+.zone-right .ai-card{width:118px;padding:10px 8px}
+.zone-right .ai-ic{margin:0 auto 4px}
+.zone-right .ai-name{font-size:10px}
+.zone-right .ai-sub{font-size:8px;line-height:1.25}
+</style>
+</head>
+<body>
+<div class="page">
+<h1>CÔNG TY TNHH ĐÔNG DƯƠNG SÀI GÒN</h1>
+<div class="h1sub">Indochina Saigon Co., Ltd. · Sơ đồ giải pháp Data Warehouse &amp; AI hỏi đáp nội bộ · Base.vn × Đông Dương Sài Gòn · 2026</div>
+
+<div class="tabnav" id="tabnav">
+  <a class="on" data-tab="solution" onclick="switchTab('solution',this)">Sơ đồ giải pháp</a>
+  <a data-tab="storage" onclick="switchTab('storage',this)">Lưu trữ (Lake → DWH → Mart)</a>
+  <a data-tab="ai" onclick="switchTab('ai',this)">AI &amp; Phân quyền — 21 use-case</a>
+  <a data-tab="mart" onclick="switchTab('mart',this)">Data Mart</a>
+</div>
+<div class="tabpage on" id="tab-solution"><div class="dw-wrap"><div class="callout amber"><b>Base làm trung gian:</b> 10 phần mềm hiện tại kết nối trực tiếp bằng API/webhook, mỗi phần mềm một pipeline riêng. Với dữ liệu KHÔNG có API (Table, Workflow, Service…), hoặc khi Đông Dương Sài Gòn dừng dùng một phần mềm hiện tại, nhân sự nhập liệu vào Base theo quy trình upload định kỳ — Base đóng vai trò lớp trung gian đẩy dữ liệu về Data Warehouse (pipeline thứ 11).</div><div class="dw-head"><div class="dw-h2">DATA WAREHOUSE LÀ <span class="accent">NỀN TẢNG DỮ LIỆU DÀI HẠN</span></div><div class="dw-sub">Nhiều nguồn → xử lý &amp; chuẩn hoá có kiểm soát → một nền tảng trung tâm → báo cáo, Data Mart, AI · Base.vn × Đông Dương Sài Gòn</div></div><div class="story3"><div class="story3-pill c-blue w-left"><div class="story3-num">01</div><div class="story3-txt"><div class="story3-t">MANY SOURCES</div><div class="story3-d">Dữ liệu đến từ 10+ hệ thống khác nhau</div></div></div><div class="story3-arrow">→</div><div class="story3-pill c-orange w-center"><div class="story3-num">02</div><div class="story3-txt"><div class="story3-t">DATA ENGINEERING</div><div class="story3-d">Làm sạch, kiểm tra, chuẩn hoá, đối soát, tích hợp — có kiểm soát, trước khi vào kho</div></div></div><div class="story3-arrow">→</div><div class="story3-pill c-purple w-right"><div class="story3-num">03</div><div class="story3-txt"><div class="story3-t">SINGLE SOURCE OF TRUTH</div><div class="story3-d">Nền tảng dữ liệu trung tâm cho báo cáo, Data Mart và AI</div></div></div></div><div class="sol-zones"><svg class="src-overlay" id="source-overlay" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:1"><defs><marker id="ah-src" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></marker></defs></svg><div class="zone-left"><div class="zone-box"><div class="zone-title">Data Sources — 10 hệ thống</div><div class="src-grid"><div class="src-chip" id="s-fasterp" onclick="pick('fasterp',this)"><span class="ic">📊</span><span class="nm">Fast ERP</span><span class="tag st-ok">Có</span></div><div class="src-chip" id="s-mobiwork" onclick="pick('mobiwork',this)"><span class="ic">🚚</span><span class="nm">MobiWork DMS</span><span class="tag st-cond">Đk</span></div><div class="src-chip" id="s-haravan" onclick="pick('haravan',this)"><span class="ic">🛒</span><span class="nm">Haravan</span><span class="tag st-ok">Có</span></div><div class="src-chip" id="s-omicall" onclick="pick('omicall',this)"><span class="ic">☎️</span><span class="nm">OmiCall/OMICRM</span><span class="tag st-ok">Có</span></div><div class="src-chip" id="s-zalo" onclick="pick('zalo',this)"><span class="ic">💬</span><span class="nm">Zalo OA</span><span class="tag st-cond">Đk</span></div><div class="src-chip" id="s-fb" onclick="pick('fb',this)"><span class="ic">💬</span><span class="nm">Facebook Msg.</span><span class="tag st-cond">Đk</span></div><div class="src-chip" id="s-m365" onclick="pick('m365',this)"><span class="ic">📧</span><span class="nm">Microsoft 365</span><span class="tag st-ok">Có</span></div><div class="src-chip" id="s-gworkspace" onclick="pick('gworkspace',this)"><span class="ic">📧</span><span class="nm">Google Workspace</span><span class="tag st-ok">Có</span></div><div class="src-chip" id="s-hanet" onclick="pick('hanet',this)"><span class="ic">📷</span><span class="nm">HANET Camera</span><span class="tag st-cond">Đk</span></div><div class="src-chip" id="s-baserequest" onclick="pick('baserequest',this)"><span class="ic">📝</span><span class="nm">Base Request</span><span class="tag st-ok">Có</span></div><div class="src-chip manual" id="s-basemd" onclick="pick('basemd',this)"><span class="ic">🗂️</span><span class="nm">Base — trung gian</span><span class="tag st-manual">TC</span></div></div></div></div><div class="zone-center"><div class="zone-box navy"><div class="zone-title">Data Engineering Hub · Pipeline chuẩn hoá dữ liệu</div><div class="pipeline-row"><div class="pipe-step"><span class="n">1</span>📥 COLLECT</div><div class="pipe-arrow">→</div><div class="pipe-step"><span class="n">2</span>🧹 CLEAN</div><div class="pipe-arrow">→</div><div class="pipe-step"><span class="n">3</span>✅ VALIDATE</div><div class="pipe-arrow">→</div><div class="pipe-step"><span class="n">4</span>📐 STANDARDIZE</div><div class="pipe-arrow">→</div><div class="pipe-step"><span class="n">5</span>🔗 INTEGRATE</div><div class="pipe-arrow">→</div><div class="pipe-step"><span class="n">6</span>📤 LOAD</div></div></div><div class="dq-panel"><div class="dq-title">🔍 Data Quality Check — kiểm soát trước khi vào kho</div><div class="dq-grid"><div class="dq-item"><span class="c">✓</span>Missing data</div><div class="dq-item"><span class="c">✓</span>Duplicate check</div><div class="dq-item"><span class="c">✓</span>Data type</div><div class="dq-item"><span class="c">✓</span>Master mapping</div><div class="dq-item"><span class="c">✓</span>Business rules</div><div class="dq-item"><span class="c">✓</span>Reconciliation</div></div></div><div class="hub-arrow"><span class="a">▼</span></div><div class="dwh-hero" id="dw-house-el"><div class="dwh-hero-title">DATA WAREHOUSE</div><div class="dwh-hero-sub">Google BigQuery · SINGLE SOURCE OF TRUTH</div><div class="dwh-tiers"><div class="dwh-tier"><div class="dwh-tier-lbl">Raw / Staging</div></div><div class="dwh-tier-arrow">↓</div><div class="dwh-tier"><div class="dwh-tier-lbl">Standardized Data</div></div><div class="dwh-tier-arrow">↓</div><div class="dwh-tier bdm"><div class="dwh-tier-lbl">Business Data Model</div><div class="dwh-dom-grid"><div class="dwh-dom-chip" onclick="pick('mart2',this)">🛒 Kinh doanh/Đơn hàng</div><div class="dwh-dom-chip" onclick="pick('mart2',this)">🤝 Khách hàng/Đại lý</div><div class="dwh-dom-chip" onclick="pick('mart3',this)">📦 Kho/Tồn kho</div><div class="dwh-dom-chip" onclick="pick('mart4',this)">🏭 Sản xuất</div><div class="dwh-dom-chip" onclick="pick('mart5',this)">💰 Tài chính</div><div class="dwh-dom-chip" onclick="pick('mart2',this)">☎️ CSKH/Khiếu nại</div><div class="dwh-dom-chip" style="grid-column:1/3" onclick="pick('mart6',this)">🗂️ Danh mục dùng chung</div></div></div></div></div></div><div class="zone-right"><div class="dw-lbl">Data Mart &amp; AI hỏi đáp</div><div class="martai-row"><svg class="mart-overlay" id="mart-overlay"><defs><marker id="ah-mart" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></marker></defs></svg><div id="dwh-anchor" style="position:absolute;left:-30px;top:50%;width:1px;height:1px"></div><div class="mart-stack"><div class="mart-card" id="mc-mart1" onclick="pick('mart1',this)"><div class="mc-name">Datamart 1 — Tổng quan điều hành</div><div class="mc-sub">Google BigQuery · BLĐ / BOD</div></div><div class="mart-card" id="mc-mart2" onclick="pick('mart2',this)"><div class="mc-name">Datamart 2 — Sales &amp; Khách hàng</div><div class="mc-sub">Google BigQuery · Sales · Marketing · CSKH</div></div><div class="mart-card" id="mc-mart3" onclick="pick('mart3',this)"><div class="mc-name">Datamart 3 — Tồn kho &amp; Kho vận</div><div class="mc-sub">Google BigQuery · Kho · Logistics</div></div><div class="mart-card" id="mc-mart4" onclick="pick('mart4',this)"><div class="mc-name">Datamart 4 — Sản xuất</div><div class="mc-sub">Google BigQuery · Sản xuất · Nhà máy</div></div><div class="mart-card" id="mc-mart5" onclick="pick('mart5',this)"><div class="mc-name">Datamart 5 — Tài chính</div><div class="mc-sub">Google BigQuery · Kế toán · BLĐ</div></div><div class="mart-card" id="mc-mart6" onclick="pick('mart6',this)"><div class="mc-name">Datamart 6 — Danh mục dùng chung</div><div class="mc-sub">Google BigQuery · Toàn hệ thống</div></div></div><div class="mart-bus"><div class="mart-bus-arrow"></div></div><div class="ai-plug-col"><div class="ai-card" onclick="goTab('ai')"><div class="ai-ic ai-endpoint">💬</div><div class="ai-name">AI hỏi đáp<br>Claude</div><div class="ai-sub">Output/Consumer · Truy vấn Data Mart / BigQuery</div></div></div></div></div></div><div class="dw-highlights"><div class="dw-hi"><div class="dw-hi-ic">🕐</div><div><div class="dw-hi-title">Tích luỹ dữ liệu theo thời gian</div><div class="dw-hi-sub">Lịch sử đầy đủ, không mất dữ liệu khi đổi phần mềm</div></div></div><div class="dw-hi"><div class="dw-hi-ic">🗄️</div><div><div class="dw-hi-title">Một nguồn dữ liệu tập trung</div><div class="dw-hi-sub">Sales, Kho, Sản xuất, Tài chính cùng chuẩn dữ liệu</div></div></div><div class="dw-hi"><div class="dw-hi-ic">📈</div><div><div class="dw-hi-title">Sẵn sàng mở rộng</div><div class="dw-hi-sub">Thêm nhà máy, khu vực, kênh bán hàng không phải làm lại</div></div></div><div class="dw-hi"><div class="dw-hi-ic">🎯</div><div><div class="dw-hi-title">Ra quyết định nhanh &amp; chính xác hơn</div><div class="dw-hi-sub">BLĐ và các phòng ban cùng nhìn một số liệu</div></div></div></div></div></div><div class="tabpage" id="tab-storage"><div class="dp-page"><div class="dp-section"><div class="dp-sec-title"><span class="hn2" style="background:#1060a0">Lake</span>Data Lake — Lưu trữ thô, bất biến</div><div class="dp-cards" style="grid-template-columns:1fr 1fr"><div class="dp-card" style="border-left:4px solid #3d6ef5"><div class="dp-card-title">📊 Dữ liệu nghiệp vụ từ các phần mềm hiện tại</div><div class="dp-card-sub">API / webhook / batch · Data pipeline</div><div class="dp-card-body"><p style="margin-bottom:8px;color:#444">Toàn bộ dữ liệu thô được lưu nguyên bản trước khi chuẩn hoá:</p><ul><li><strong>Sales &amp; Khách hàng</strong> — đơn hàng, khách hàng, đại lý (Haravan, MobiWork DMS)</li><li><strong>Kế toán &amp; Tài chính</strong> — công nợ, hoá đơn, thu chi (Fast ERP)</li><li><strong>Kho vận</strong> — nhập/xuất/tồn theo SKU (Fast ERP)</li><li><strong>CSKH</strong> — cuộc gọi, ticket, hội thoại (OmiCall, Zalo OA, Facebook Messenger)</li><li><strong>Vận hành nội bộ</strong> — đề xuất, phê duyệt, chấm công (Base Request, HANET Camera)</li></ul><div class="dp-note" style="background:#f0f4ff;color:#3d6ef5"><strong>Các trường lưu trữ:</strong><br><code style="color:#3d6ef5">sku_code</code> · <code style="color:#3d6ef5">customer_code</code> · <code style="color:#3d6ef5">order_id</code> · <code style="color:#3d6ef5">warehouse_code</code> · <code style="color:#3d6ef5">factory_code</code></div></div></div><div class="dp-card" style="border-left:4px solid #f5a623"><div class="dp-card-title">🧩 Dữ liệu quy trình từ Base</div><div class="dp-card-sub">Base API / webhook / nhập liệu thủ công</div><div class="dp-card-body"><p style="margin-bottom:8px;color:#444">Bổ sung ngữ cảnh vận hành, và là lớp trung gian khi phương án 2 được áp dụng:</p><ul><li><strong>Base Request</strong> — biểu mẫu đề nghị, phê duyệt mua hàng/thanh toán</li><li><strong>Base Table/Workflow/Service</strong> — dữ liệu KHÔNG có API (Phương án 2)</li><li>Nhật ký quy trình giúp đối chiếu với dữ liệu giao dịch</li></ul><div class="dp-note" style="background:#fff8f0;color:#c07010"><strong>Ghi chú:</strong> append-only, không sửa/xoá — lưu lịch sử để truy vết. Đông Dương Sài Gòn sở hữu toàn bộ dữ liệu.</div></div></div></div></div><div class="dp-section"><div class="dp-sec-title"><span class="hn2" style="background:#5830d8">DWH</span>Data Warehouse — Chuẩn hoá &amp; mô hình hoá</div><div class="dp-cards" style="grid-template-columns:1fr 1fr 1fr"><div class="dp-card"><div class="dp-card-title">🔄 ETL — Lake → Warehouse</div><div class="dp-card-sub">Dataform / SQL transform</div><div class="dp-card-body">Chuẩn hoá dữ liệu theo mô hình fact / dimension: fact_order, fact_sales, fact_inventory, fact_production, fact_finance, và các bảng dimension (dim_customer, dim_sku, dim_warehouse, dim_factory, dim_region).</div></div><div class="dp-card"><div class="dp-card-title">🗂️ Mô hình fact / dimension</div><div class="dp-card-sub">Single source of truth</div><div class="dp-card-body">Đối chiếu và hợp nhất dữ liệu từ 8 nguồn khác nhau về cùng một chuẩn: mã khách hàng, mã SKU, mã kho, mã nhà máy — làm nền cho toàn bộ báo cáo và AI.</div></div><div class="dp-card"><div class="dp-card-title">🔐 Row-Level Security (RLS)</div><div class="dp-card-sub">Áp dụng ngay tại Warehouse</div><div class="dp-card-body">View/policy theo vai trò (BLĐ / quản lý / bộ phận) và theo scope (khu vực / kho / nhà máy / cá nhân) — chi tiết tại tab AI &amp; Phân quyền.</div></div></div></div><div class="dp-section"><div class="dp-sec-title"><span class="hn2" style="background:#7c5cfc">Mart</span>Data Mart — 6 mart phục vụ báo cáo &amp; AI</div><div class="dp-cards" style="grid-template-columns:repeat(3,1fr)"><div class="dp-card" style="border-left:4px solid #7c5cfc"><div class="dp-card-title">Mart 1 — Tổng quan điều hành</div><div class="dp-card-sub">BLĐ / BOD</div><div class="dp-card-body">KPI tổng hợp toàn công ty: doanh thu, doanh số, tồn kho, sản xuất, công nợ, cảnh báo vận hành</div></div><div class="dp-card" style="border-left:4px solid #7c5cfc"><div class="dp-card-title">Mart 2 — Sales &amp; Khách hàng</div><div class="dp-card-sub">Sales · Marketing · CSKH</div><div class="dp-card-body">Doanh số, khách hàng, đại lý/NPP, đơn hàng, giá bán, chiết khấu, khiếu nại</div></div><div class="dp-card" style="border-left:4px solid #7c5cfc"><div class="dp-card-title">Mart 3 — Tồn kho &amp; Kho vận</div><div class="dp-card-sub">Kho · Logistics</div><div class="dp-card-body">Nhập – xuất – tồn theo SKU/kho, đơn hàng chờ giao, tồn kho theo khu vực</div></div><div class="dp-card" style="border-left:4px solid #7c5cfc"><div class="dp-card-title">Mart 4 — Sản xuất</div><div class="dp-card-sub">Sản xuất · Nhà máy</div><div class="dp-card-body">Sản lượng, kế hoạch vs thực tế, chất lượng, nguyên vật liệu, năng suất, downtime</div></div><div class="dp-card" style="border-left:4px solid #7c5cfc"><div class="dp-card-title">Mart 5 — Tài chính</div><div class="dp-card-sub">Kế toán · BLĐ</div><div class="dp-card-body">Doanh thu, giá vốn, công nợ phải thu/trả, chi phí, dòng tiền</div></div><div class="dp-card" style="border-left:4px solid #7c5cfc"><div class="dp-card-title">Mart 6 — Danh mục dùng chung</div><div class="dp-card-sub">Toàn hệ thống</div><div class="dp-card-body">Master data: SKU, khách hàng, đại lý, nhà cung cấp, kho, nhà máy, khu vực</div></div></div></div><div class="dp-section"><div class="dp-sec-title"><span class="hn2" style="background:#c07010">Vận hành</span>Giám sát &amp; dự phòng</div><div class="dp-cards" style="grid-template-columns:1fr 1fr 1fr"><div class="dp-card"><div class="dp-card-title">📡 Monitoring</div><div class="dp-card-sub">Google Cloud Monitoring</div><div class="dp-card-body">Theo dõi pipeline, job ETL, độ trễ cập nhật; phát hiện lỗi đồng bộ hoặc nghẽn hệ thống.</div></div><div class="dp-card"><div class="dp-card-title">✉️ Cảnh báo</div><div class="dp-card-sub">Gmail · Base webhook</div><div class="dp-card-body">Gửi cảnh báo lỗi pipeline qua email cho đội triển khai, hoặc qua Base Message cho người dùng nội bộ.</div></div><div class="dp-card"><div class="dp-card-title">🗄️ Backlog storage</div><div class="dp-card-sub">PostgreSQL · DLQ/retry</div><div class="dp-card-body">Lưu backlog khi pipeline lỗi, job retry xử lý lại về sau — không mất dữ liệu.</div></div></div></div></div></div><div class="tabpage" id="tab-ai"><div class="dp-page"><div class="dp-section"><div class="dp-sec-title"><span class="hn2" style="background:#7c5cfc">Mô hình</span>Role → Data Domain → Data Scope</div><p style="font-size:11.5px;color:#555;line-height:1.6;margin-bottom:14px">Với quy mô sản xuất – phân phối của Đông Dương Sài Gòn (nhiều nhà máy, khu vực, đại lý, kênh bán hàng), phân quyền AI <b>không chỉ chia theo phòng ban</b> mà chia theo 3 lớp: vai trò được hỏi domain nào, và trong phạm vi (scope) nào.</p><div class="claude-flow"><div class="cf-step"><div class="cf-step-num">BƯỚC 1</div><div class="cf-step-title">Role — Vai trò</div><div class="cf-step-body">Người dùng đăng nhập AI với vai trò cụ thể: BLĐ, Sales, Kế toán, Kho, Sản xuất, Marketing, CSKH, Mua hàng.</div></div><div class="cf-arr">→</div><div class="cf-step"><div class="cf-step-num">BƯỚC 2</div><div class="cf-step-title">Data Domain — Miền dữ liệu</div><div class="cf-step-body">Mỗi vai trò được cấp quyền vào một số domain: Sales &amp; Revenue, Customer &amp; Dealer, Order, Inventory, Production, Finance, Customer Service.</div></div><div class="cf-arr">→</div><div class="cf-step"><div class="cf-step-num">BƯỚC 3</div><div class="cf-step-title">Data Scope — Phạm vi</div><div class="cf-step-body">Trong domain được cấp, dữ liệu còn bị filter theo phạm vi: Company / Region / Branch / Factory / Personal.</div></div></div></div><div class="dp-section"><div class="dp-sec-title"><span class="hn2" style="background:#1a6a3a">Trực quan</span>Claude chỉ trả lời đúng dữ liệu được phép</div><div class="pflow"><div class="pflow-box" style="background:#eef2fb;border-color:#0e2a5233"><div class="pflow-ic">👤</div><div class="pflow-title" style="color:#0e2a52">Người dùng + Vai trò</div><div class="pflow-sub" style="color:#0e2a52">Đăng nhập AI với vai trò cụ thể (BLĐ, Sales, Kế toán, Kho…)</div></div><div class="pflow-arr">→</div><div class="pflow-box" style="background:#fff4ec;border-color:#c0500033"><div class="pflow-ic">🤖</div><div class="pflow-title" style="color:#c05000">Claude (Service Account)</div><div class="pflow-sub" style="color:#c05000">Quyền BigQuery Data Viewer — chỉ đọc, không ghi</div></div><div class="pflow-arr">→</div><div class="pflow-box" style="background:#f0f4ff;border-color:#1a3d8033"><div class="pflow-ic">🗄️</div><div class="pflow-title" style="color:#1a3d80">BigQuery — 6 Data Mart</div><div class="pflow-sub" style="color:#1a3d80">Mỗi mart áp RLS filter theo vai trò &amp; scope của người hỏi</div></div><div class="pflow-arr">→</div><div class="pflow-box" style="background:#e2f7ef;border-color:#1a9e6c33"><div class="pflow-ic">✅</div><div class="pflow-title" style="color:#1a9e6c">Câu trả lời đúng phạm vi</div><div class="pflow-sub" style="color:#1a9e6c">Chỉ trong Data Domain + Data Scope được cấp cho vai trò đó</div></div></div><p style="font-size:11px;color:#555;margin-bottom:10px">Ví dụ minh hoạ — mỗi vai trò nhìn thấy một tập Data Mart khác nhau:</p><div class="mart-chip-row"><span class="mart-chip-role" style="color:#7c5cfc">BLĐ / BOD</span><span class="mart-chip mc-full">✓ Tổng quan</span><span class="mart-chip mc-full">✓ Sales&amp;KH</span><span class="mart-chip mc-full">✓ Tồn kho</span><span class="mart-chip mc-full">✓ Sản xuất</span><span class="mart-chip mc-full">✓ Tài chính</span><span class="mart-chip mc-full">✓ Danh mục</span></div><div class="mart-chip-row"><span class="mart-chip-role" style="color:#3d6ef5">Sales / Kinh doanh</span><span class="mart-chip mc-none">✕ Tổng quan</span><span class="mart-chip mc-full">✓ Sales&amp;KH</span><span class="mart-chip mc-part">△ Tồn kho</span><span class="mart-chip mc-none">✕ Sản xuất</span><span class="mart-chip mc-none">✕ Tài chính</span><span class="mart-chip mc-full">✓ Danh mục</span></div><div class="mart-chip-row"><span class="mart-chip-role" style="color:#e8449e">Marketing / Trade</span><span class="mart-chip mc-none">✕ Tổng quan</span><span class="mart-chip mc-part">△ Sales&amp;KH</span><span class="mart-chip mc-none">✕ Tồn kho</span><span class="mart-chip mc-part">△ Sản xuất</span><span class="mart-chip mc-none">✕ Tài chính</span><span class="mart-chip mc-full">✓ Danh mục</span></div><div class="mart-chip-row"><span class="mart-chip-role" style="color:#e8871a">CSKH / Tổng đài</span><span class="mart-chip mc-none">✕ Tổng quan</span><span class="mart-chip mc-part">△ Sales&amp;KH</span><span class="mart-chip mc-part">△ Tồn kho</span><span class="mart-chip mc-none">✕ Sản xuất</span><span class="mart-chip mc-none">✕ Tài chính</span><span class="mart-chip mc-full">✓ Danh mục</span></div><div class="mart-chip-row"><span class="mart-chip-role" style="color:#2dc98a">Kế toán / Tài chính</span><span class="mart-chip mc-none">✕ Tổng quan</span><span class="mart-chip mc-part">△ Sales&amp;KH</span><span class="mart-chip mc-part">△ Tồn kho</span><span class="mart-chip mc-part">△ Sản xuất</span><span class="mart-chip mc-full">✓ Tài chính</span><span class="mart-chip mc-full">✓ Danh mục</span></div><div class="mart-chip-row"><span class="mart-chip-role" style="color:#f5a623">Kho / Logistics</span><span class="mart-chip mc-none">✕ Tổng quan</span><span class="mart-chip mc-none">✕ Sales&amp;KH</span><span class="mart-chip mc-full">✓ Tồn kho</span><span class="mart-chip mc-part">△ Sản xuất</span><span class="mart-chip mc-none">✕ Tài chính</span><span class="mart-chip mc-full">✓ Danh mục</span></div><div class="mart-chip-row"><span class="mart-chip-role" style="color:#17a2b8">Sản xuất / Nhà máy</span><span class="mart-chip mc-none">✕ Tổng quan</span><span class="mart-chip mc-none">✕ Sales&amp;KH</span><span class="mart-chip mc-part">△ Tồn kho</span><span class="mart-chip mc-full">✓ Sản xuất</span><span class="mart-chip mc-none">✕ Tài chính</span><span class="mart-chip mc-full">✓ Danh mục</span></div><div class="mart-chip-row"><span class="mart-chip-role" style="color:#5a6b8c">Mua hàng / Cung ứng</span><span class="mart-chip mc-none">✕ Tổng quan</span><span class="mart-chip mc-none">✕ Sales&amp;KH</span><span class="mart-chip mc-full">✓ Tồn kho</span><span class="mart-chip mc-full">✓ Sản xuất</span><span class="mart-chip mc-part">△ Tài chính</span><span class="mart-chip mc-full">✓ Danh mục</span></div><p style="font-size:10.5px;color:#999;margin-top:8px;font-style:italic">✓ đầy đủ · △ một phần (theo Data Scope) · ✕ không truy cập</p></div><div class="dp-section"><div class="dp-sec-title"><span class="hn2" style="background:#3d6ef5">8 vai trò</span>Cơ cấu vai trò đề xuất</div><table class="role-table"><thead><tr><th>Vai trò</th><th>Phạm vi chính</th><th>Mức truy cập (Scope)</th></tr></thead><tbody><tr><td><span class="role-chip" style="background:#7c5cfc">BLĐ / BOD</span></td><td>Toàn bộ hoạt động</td><td>Toàn công ty</td></tr><tr><td><span class="role-chip" style="background:#3d6ef5">Sales / Kinh doanh</span></td><td>Khách hàng, đại lý, đơn hàng, doanh số</td><td>Theo khu vực / nhân viên</td></tr><tr><td><span class="role-chip" style="background:#e8449e">Marketing / Trade</span></td><td>Sản phẩm, chương trình, thị trường, campaign</td><td>Theo thị trường / brand</td></tr><tr><td><span class="role-chip" style="background:#e8871a">CSKH / Tổng đài</span></td><td>Khách hàng, đơn hàng, khiếu nại</td><td>Khách hàng / đơn hàng liên quan</td></tr><tr><td><span class="role-chip" style="background:#2dc98a">Kế toán / Tài chính</span></td><td>Doanh thu, công nợ, thu chi, hóa đơn</td><td>Toàn công ty hoặc đơn vị phụ trách</td></tr><tr><td><span class="role-chip" style="background:#f5a623">Kho / Logistics</span></td><td>Tồn kho, nhập xuất, giao hàng</td><td>Theo kho</td></tr><tr><td><span class="role-chip" style="background:#17a2b8">Sản xuất / Nhà máy</span></td><td>Sản xuất, nguyên vật liệu, năng suất, chất lượng</td><td>Theo nhà máy</td></tr><tr><td><span class="role-chip" style="background:#5a6b8c">Mua hàng / Cung ứng</span></td><td>Nhà cung cấp, mua hàng, nguyên vật liệu</td><td>Theo nhóm hàng / nhà máy</td></tr></tbody></table></div><div class="dp-section"><div class="dp-sec-title"><span class="hn2" style="background:#e8871a">Ma trận</span>Ma trận phân quyền AI theo Data Domain</div><div class="perm-wrap"><table class="perm-table"><thead><tr><th class="dom">Data Domain</th><th style="color:#7c5cfc">BLĐ</th><th style="color:#3d6ef5">Sales</th><th style="color:#e8449e">Marketing</th><th style="color:#e8871a">CSKH</th><th style="color:#2dc98a">Kế toán</th><th style="color:#f5a623">Kho</th><th style="color:#17a2b8">Sản xuất</th><th style="color:#5a6b8c">Mua hàng</th></tr></thead><tbody><tr><td class="dom">Doanh thu</td><td><span class="pv1">✓</span></td><td><span class="pv2">△</span></td><td><span class="pv2">△</span></td><td><span class="pv0">—</span></td><td><span class="pv1">✓</span></td><td><span class="pv2">△</span></td><td><span class="pv2">△</span></td><td><span class="pv0">—</span></td></tr><tr><td class="dom">Doanh số theo Sales</td><td><span class="pv1">✓</span></td><td><span class="pv2">△</span></td><td><span class="pv2">△</span></td><td><span class="pv0">—</span></td><td><span class="pv1">✓</span></td><td><span class="pv0">—</span></td><td><span class="pv0">—</span></td><td><span class="pv0">—</span></td></tr><tr><td class="dom">Khách hàng</td><td><span class="pv1">✓</span></td><td><span class="pv1">✓</span></td><td><span class="pv1">✓</span></td><td><span class="pv1">✓</span></td><td><span class="pv2">△</span></td><td><span class="pv0">—</span></td><td><span class="pv0">—</span></td><td><span class="pv0">—</span></td></tr><tr><td class="dom">Đại lý / NPP</td><td><span class="pv1">✓</span></td><td><span class="pv1">✓</span></td><td><span class="pv1">✓</span></td><td><span class="pv1">✓</span></td><td><span class="pv2">△</span></td><td><span class="pv0">—</span></td><td><span class="pv0">—</span></td><td><span class="pv0">—</span></td></tr><tr><td class="dom">Đơn hàng</td><td><span class="pv1">✓</span></td><td><span class="pv1">✓</span></td><td><span class="pv2">△</span></td><td><span class="pv1">✓</span></td><td><span class="pv1">✓</span></td><td><span class="pv1">✓</span></td><td><span class="pv2">△</span></td><td><span class="pv0">—</span></td></tr><tr><td class="dom">Công nợ khách hàng</td><td><span class="pv1">✓</span><span class="plock">🔒</span></td><td><span class="pv2">△</span></td><td><span class="pv0">—</span></td><td><span class="pv0">—</span></td><td><span class="pv1">✓</span></td><td><span class="pv0">—</span></td><td><span class="pv0">—</span></td><td><span class="pv0">—</span></td></tr><tr><td class="dom">Giá bán</td><td><span class="pv1">✓</span></td><td><span class="pv1">✓</span></td><td><span class="pv2">△</span></td><td><span class="pv2">△</span></td><td><span class="pv1">✓</span></td><td><span class="pv0">—</span></td><td><span class="pv0">—</span></td><td><span class="pv0">—</span></td></tr><tr><td class="dom">Chiết khấu</td><td><span class="pv1">✓</span><span class="plock">🔒</span></td><td><span class="pv2">△</span></td><td><span class="pv2">△</span></td><td><span class="pv0">—</span></td><td><span class="pv1">✓</span></td><td><span class="pv0">—</span></td><td><span class="pv0">—</span></td><td><span class="pv0">—</span></td></tr><tr><td class="dom">Tồn kho</td><td><span class="pv1">✓</span></td><td><span class="pv2">△</span></td><td><span class="pv2">△</span></td><td><span class="pv2">△</span></td><td><span class="pv2">△</span></td><td><span class="pv1">✓</span></td><td><span class="pv1">✓</span></td><td><span class="pv1">✓</span></td></tr><tr><td class="dom">Nhập / xuất kho</td><td><span class="pv1">✓</span></td><td><span class="pv2">△</span></td><td><span class="pv0">—</span></td><td><span class="pv2">△</span></td><td><span class="pv1">✓</span></td><td><span class="pv1">✓</span></td><td><span class="pv1">✓</span></td><td><span class="pv1">✓</span></td></tr><tr><td class="dom">Sản xuất</td><td><span class="pv1">✓</span></td><td><span class="pv0">—</span></td><td><span class="pv2">△</span></td><td><span class="pv0">—</span></td><td><span class="pv2">△</span></td><td><span class="pv2">△</span></td><td><span class="pv0">—</span></td><td><span class="pv1">✓</span></td></tr><tr><td class="dom">Nguyên vật liệu</td><td><span class="pv1">✓</span></td><td><span class="pv0">—</span></td><td><span class="pv0">—</span></td><td><span class="pv0">—</span></td><td><span class="pv2">△</span></td><td><span class="pv2">△</span></td><td><span class="pv1">✓</span></td><td><span class="pv1">✓</span></td></tr><tr><td class="dom">Năng suất nhà máy</td><td><span class="pv1">✓</span></td><td><span class="pv0">—</span></td><td><span class="pv0">—</span></td><td><span class="pv0">—</span></td><td><span class="pv0">—</span></td><td><span class="pv0">—</span></td><td><span class="pv1">✓</span></td><td><span class="pv0">—</span></td></tr><tr><td class="dom">Chất lượng sản phẩm</td><td><span class="pv1">✓</span></td><td><span class="pv2">△</span></td><td><span class="pv1">✓</span></td><td><span class="pv1">✓</span></td><td><span class="pv0">—</span></td><td><span class="pv2">△</span></td><td><span class="pv1">✓</span></td><td><span class="pv1">✓</span></td></tr><tr><td class="dom">Nhà cung cấp</td><td><span class="pv1">✓</span></td><td><span class="pv0">—</span></td><td><span class="pv0">—</span></td><td><span class="pv0">—</span></td><td><span class="pv1">✓</span></td><td><span class="pv2">△</span></td><td><span class="pv1">✓</span></td><td><span class="pv1">✓</span></td></tr><tr><td class="dom">Chi phí mua hàng</td><td><span class="pv1">✓</span><span class="plock">🔒</span></td><td><span class="pv0">—</span></td><td><span class="pv0">—</span></td><td><span class="pv0">—</span></td><td><span class="pv1">✓</span><span class="plock">🔒</span></td><td><span class="pv0">—</span></td><td><span class="pv2">△</span></td><td><span class="pv1">✓</span></td></tr><tr><td class="dom">Khiếu nại KH</td><td><span class="pv1">✓</span></td><td><span class="pv2">△</span></td><td><span class="pv1">✓</span></td><td><span class="pv1">✓</span></td><td><span class="pv0">—</span></td><td><span class="pv2">△</span></td><td><span class="pv1">✓</span></td><td><span class="pv0">—</span></td></tr><tr><td class="dom">KPI vận hành</td><td><span class="pv1">✓</span></td><td><span class="pv2">△</span></td><td><span class="pv2">△</span></td><td><span class="pv2">△</span></td><td><span class="pv2">△</span></td><td><span class="pv1">✓</span></td><td><span class="pv1">✓</span></td><td><span class="pv1">✓</span></td></tr></tbody></table></div><div class="perm-legend"><span><span class="k pv1">✓</span>được hỏi và xem dữ liệu</span><span><span class="k pv2">△</span>chỉ xem một phần dữ liệu</span><span><span class="k pv0">—</span>không được truy cập</span><span><span class="k">🔒</span>dữ liệu nhạy cảm, chỉ cấp quản lý được xem</span></div><p style="font-size:10.5px;color:#999;margin-top:8px;font-style:italic">Lưu ý: "✓" không có nghĩa nhân viên xem toàn bộ dữ liệu — luôn cần thêm Data Scope ở dưới.</p></div><div class="dp-section"><div class="dp-sec-title"><span class="hn2" style="background:#2dc98a">Data Scope</span>5 kiểu phạm vi dữ liệu</div><div class="dp-cards" style="grid-template-columns:repeat(3,1fr)"><div class="scope-card" style="border-color:#7c5cfc22;background:#7c5cfc0d"><div class="scope-title" style="color:#7c5cfc">Scope 1 — Company</div><div class="scope-who">Dành cho BLĐ</div><div class="scope-desc">Toàn bộ công ty, toàn bộ nhà máy, toàn bộ khu vực, toàn bộ sản phẩm, toàn bộ doanh thu/chi phí/lợi nhuận.</div><div class="scope-ok">✓ Doanh thu toàn công ty tháng này?</div><div class="scope-ok">✓ So sánh hiệu quả giữa các khu vực/nhà máy</div></div><div class="scope-card" style="border-color:#3d6ef522;background:#3d6ef50d"><div class="scope-title" style="color:#3d6ef5">Scope 2 — Region / Territory</div><div class="scope-who">Dành cho Sales / Marketing</div><div class="scope-desc">Sales miền Bắc chỉ thấy khách hàng, đơn hàng, doanh số của miền Bắc.</div><div class="scope-ok">✓ Doanh số khu vực miền Bắc tháng này?</div><div class="scope-ok">✓ Top 10 khách hàng của tôi?</div><div class="scope-ok">✓ Đại lý nào giảm doanh số mạnh nhất?</div><div class="scope-no" style="color:#c01010">✕ Doanh thu toàn quốc là bao nhiêu?</div></div><div class="scope-card" style="border-color:#f5a62322;background:#f5a6230d"><div class="scope-title" style="color:#f5a623">Scope 3 — Branch / Warehouse</div><div class="scope-who">Dành cho Kho</div><div class="scope-desc">Thủ kho Hà Nội chỉ được xem tồn kho tại kho Hà Nội.</div><div class="scope-ok">✓ Tồn kho SKU A hiện tại?</div><div class="scope-ok">✓ SKU nào sắp hết?</div><div class="scope-ok">✓ Hôm nay nhập bao nhiêu?</div><div class="scope-no" style="color:#c01010">✕ Tổng tồn kho toàn hệ thống?</div></div><div class="scope-card" style="border-color:#17a2b822;background:#17a2b80d"><div class="scope-title" style="color:#17a2b8">Scope 4 — Factory</div><div class="scope-who">Dành cho Sản xuất</div><div class="scope-desc">Nhà máy A chỉ xem dữ liệu sản xuất của Nhà máy A.</div><div class="scope-ok">✓ Sản lượng hôm nay?</div><div class="scope-ok">✓ Máy nào downtime nhiều?</div><div class="scope-ok">✓ SKU nào có tỷ lệ lỗi cao?</div><div class="scope-no" style="color:#c01010">✕ Sản lượng toàn bộ các nhà máy?</div></div><div class="scope-card" style="border-color:#e8871a22;background:#e8871a0d"><div class="scope-title" style="color:#e8871a">Scope 5 — Personal / Assigned</div><div class="scope-who">Dành cho Sales / CSKH</div><div class="scope-desc">Sales A chỉ được hỏi về dữ liệu của chính mình — AI tự filter Salesperson = Current_User.</div><div class="scope-ok">✓ Doanh số của tôi tháng này?</div><div class="scope-ok">✓ Khách hàng tôi phụ trách đang có công nợ bao nhiêu?</div><div class="scope-no" style="color:#c01010">✕ Doanh số của Sales B là bao nhiêu?</div></div></div></div><div class="dp-section"><div class="dp-sec-title"><span class="hn2" style="background:#c01010">4 mức</span>Mức độ nhạy cảm của dữ liệu</div><div class="level-row" style="background:#eef0f8"><div class="level-badge" style="background:#55522;color:#555">L1</div><div class="level-name" style="color:#555">Aggregate</div><div class="level-desc">Chỉ xem số liệu tổng hợp</div></div><div class="level-row" style="background:#e8f4ff"><div class="level-badge" style="background:#1040a022;color:#1040a0">L2</div><div class="level-name" style="color:#1040a0">Operational</div><div class="level-desc">Xem dữ liệu chi tiết phục vụ công việc hàng ngày</div></div><div class="level-row" style="background:#fff3dc"><div class="level-badge" style="background:#a0600022;color:#a06000">L3</div><div class="level-name" style="color:#a06000">Sensitive</div><div class="level-desc">Xem dữ liệu nhạy cảm: giá, margin, công nợ</div></div><div class="level-row" style="background:#ffe8e8"><div class="level-badge" style="background:#c0101022;color:#c01010">L4</div><div class="level-name" style="color:#c01010">Restricted</div><div class="level-desc">Chỉ BLĐ / CFO / role đặc biệt được xem</div></div></div><div class="dp-section"><div class="dp-sec-title"><span class="hn2" style="background:#111">Ví dụ</span>Cùng một câu hỏi — AI trả lời khác nhau theo vai trò</div><div class="example-panel"><div class="example-q">❝ Doanh số tháng này thế nào? ❞</div><div class="example-row"><div class="example-role">BOD</div><div class="example-ans">Doanh thu toàn công ty đạt X tỷ, tăng Y% YoY; miền Bắc đóng góp…, miền Nam…, nhóm sản phẩm A dẫn đầu tăng trưởng.</div></div><div class="example-row"><div class="example-role">Sales Manager miền Bắc</div><div class="example-ans">Doanh số team miền Bắc đạt X tỷ, đạt Y% target; Sales A dẫn đầu doanh số tuần này.</div></div><div class="example-row"><div class="example-role">Sales Executive</div><div class="example-ans">Doanh số của bạn đạt X triệu, đạt Y% target; khách hàng A đóng góp doanh số lớn nhất.</div></div><div class="example-row"><div class="example-role">CSKH</div><div class="example-ans">Trong nhóm khách hàng bạn đang xử lý, tổng giá trị đơn hàng tháng này là X.</div></div><div class="example-row"><div class="example-role">Kho</div><div class="example-ans">AI không trả lời doanh số vì role Kho không có quyền truy cập Sales/Finance — thay vào đó: "Hiện kho Hà Nội có X đơn hàng đang chờ xuất."</div></div></div></div><div class="dp-section"><div class="dp-sec-title"><span class="hn2" style="background:#7c5cfc">21 Use-case</span>Danh sách use-case AI theo vai trò</div><div class="uc-group"><div class="uc-head" style="background:#7c5cfc">AI cho BLĐ / Điều hành (toàn công ty)</div><div class="uc-grid"><div class="uc-item" id="u-uc1" onclick="pick('uc1',this)" style="border-color:#7c5cfc55;background:#faf7ff"><div class="uc-id" style="color:#7c5cfc">UC1</div><div class="uc-name">AI Executive Summary toàn công ty</div><div class="uc-period">Ngày/Tuần · Company</div></div><div class="uc-item" id="u-uc2" onclick="pick('uc2',this)" style="border-color:#7c5cfc55;background:#faf7ff"><div class="uc-id" style="color:#7c5cfc">UC2</div><div class="uc-name">AI đề xuất hành động ưu tiên xử lý</div><div class="uc-period">Tuần · Company</div></div><div class="uc-item" id="u-uc3" onclick="pick('uc3',this)" style="border-color:#7c5cfc55;background:#faf7ff"><div class="uc-id" style="color:#7c5cfc">UC3</div><div class="uc-name">AI hỏi đáp tự do toàn công ty (Chat với dữ liệu)</div><div class="uc-period">Real-time · Company</div></div></div></div><div class="uc-group"><div class="uc-head" style="background:#3d6ef5">AI cho Sales / Kinh doanh</div><div class="uc-grid"><div class="uc-item" id="u-uc4" onclick="pick('uc4',this)" style="border-color:#3d6ef555;background:#f5f9ff"><div class="uc-id" style="color:#3d6ef5">UC4</div><div class="uc-name">Doanh số &amp; đơn hàng mới hôm nay theo khu vực</div><div class="uc-period">Ngày · Region</div></div><div class="uc-item" id="u-uc5" onclick="pick('uc5',this)" style="border-color:#3d6ef555;background:#f5f9ff"><div class="uc-id" style="color:#3d6ef5">UC5</div><div class="uc-name">Top khách hàng / đại lý tăng - giảm doanh số</div><div class="uc-period">Tuần · Region / Personal</div></div><div class="uc-item" id="u-uc6" onclick="pick('uc6',this)" style="border-color:#3d6ef555;background:#f5f9ff"><div class="uc-id" style="color:#3d6ef5">UC6</div><div class="uc-name">Khách hàng / đại lý có nguy cơ rời bỏ</div><div class="uc-period">Tháng/Quý · Region</div></div></div></div><div class="uc-group"><div class="uc-head" style="background:#2dc98a">AI cho Kế toán / Tài chính</div><div class="uc-grid"><div class="uc-item" id="u-uc7" onclick="pick('uc7',this)" style="border-color:#2dc98a55;background:#f0faf5"><div class="uc-id" style="color:#2dc98a">UC7</div><div class="uc-name">Công nợ phải thu đến hạn</div><div class="uc-period">Ngày · Company 🔒</div></div><div class="uc-item" id="u-uc8" onclick="pick('uc8',this)" style="border-color:#2dc98a55;background:#f0faf5"><div class="uc-id" style="color:#2dc98a">UC8</div><div class="uc-name">Doanh thu – giá vốn – lợi nhuận gộp</div><div class="uc-period">Tuần · Company 🔒</div></div><div class="uc-item" id="u-uc9" onclick="pick('uc9',this)" style="border-color:#2dc98a55;background:#f0faf5"><div class="uc-id" style="color:#2dc98a">UC9</div><div class="uc-name">Ngân sách vs chi phí thực tế</div><div class="uc-period">Tháng/Quý · Company 🔒</div></div></div></div><div class="uc-group"><div class="uc-head" style="background:#f5a623">AI cho Kho / Logistics</div><div class="uc-grid"><div class="uc-item" id="u-uc10" onclick="pick('uc10',this)" style="border-color:#f5a62355;background:#fffef5"><div class="uc-id" style="color:#f5a623">UC10</div><div class="uc-name">Cảnh báo SKU sắp hết hàng</div><div class="uc-period">Ngày · Branch/Warehouse</div></div><div class="uc-item" id="u-uc11" onclick="pick('uc11',this)" style="border-color:#f5a62355;background:#fffef5"><div class="uc-id" style="color:#f5a623">UC11</div><div class="uc-name">Nhập – xuất – tồn theo kho</div><div class="uc-period">Tuần · Branch/Warehouse</div></div><div class="uc-item" id="u-uc12" onclick="pick('uc12',this)" style="border-color:#f5a62355;background:#fffef5"><div class="uc-id" style="color:#f5a623">UC12</div><div class="uc-name">Vòng quay tồn kho &amp; hàng tồn lâu</div><div class="uc-period">Tháng/Quý · Branch/Warehouse</div></div></div></div><div class="uc-group"><div class="uc-head" style="background:#17a2b8">AI cho Sản xuất / Nhà máy</div><div class="uc-grid"><div class="uc-item" id="u-uc13" onclick="pick('uc13',this)" style="border-color:#17a2b855;background:#f2fdff"><div class="uc-id" style="color:#17a2b8">UC13</div><div class="uc-name">Sản lượng hôm nay vs kế hoạch</div><div class="uc-period">Ngày · Factory</div></div><div class="uc-item" id="u-uc14" onclick="pick('uc14',this)" style="border-color:#17a2b855;background:#f2fdff"><div class="uc-id" style="color:#17a2b8">UC14</div><div class="uc-name">Tỷ lệ lỗi / chất lượng theo SKU &amp; máy</div><div class="uc-period">Tuần · Factory</div></div><div class="uc-item" id="u-uc15" onclick="pick('uc15',this)" style="border-color:#17a2b855;background:#f2fdff"><div class="uc-id" style="color:#17a2b8">UC15</div><div class="uc-name">Hiệu suất &amp; downtime theo nhà máy</div><div class="uc-period">Tháng/Quý · Factory</div></div></div></div><div class="uc-group"><div class="uc-head" style="background:#e8449e">AI cho Marketing / Trade</div><div class="uc-grid"><div class="uc-item" id="u-uc16" onclick="pick('uc16',this)" style="border-color:#e8449e55;background:#fff5fb"><div class="uc-id" style="color:#e8449e">UC16</div><div class="uc-name">Hiệu quả chương trình / campaign theo khu vực</div><div class="uc-period">Tuần · Region/Brand</div></div><div class="uc-item" id="u-uc17" onclick="pick('uc17',this)" style="border-color:#e8449e55;background:#fff5fb"><div class="uc-id" style="color:#e8449e">UC17</div><div class="uc-name">Doanh số theo sản phẩm / brand</div><div class="uc-period">Tháng/Quý · Region/Brand</div></div></div></div><div class="uc-group"><div class="uc-head" style="background:#e8871a">AI cho CSKH / Tổng đài</div><div class="uc-grid"><div class="uc-item" id="u-uc18" onclick="pick('uc18',this)" style="border-color:#e8871a55;background:#fff8f0"><div class="uc-id" style="color:#e8871a">UC18</div><div class="uc-name">Khiếu nại / ticket chưa xử lý &amp; SLA</div><div class="uc-period">Ngày · Personal/Assigned</div></div><div class="uc-item" id="u-uc19" onclick="pick('uc19',this)" style="border-color:#e8871a55;background:#fff8f0"><div class="uc-id" style="color:#e8871a">UC19</div><div class="uc-name">Top complaint theo sản phẩm / khu vực</div><div class="uc-period">Tuần · Region</div></div></div></div><div class="uc-group"><div class="uc-head" style="background:#5a6b8c">AI cho Mua hàng / Cung ứng</div><div class="uc-grid"><div class="uc-item" id="u-uc20" onclick="pick('uc20',this)" style="border-color:#5a6b8c55;background:#f4f6f9"><div class="uc-id" style="color:#5a6b8c">UC20</div><div class="uc-name">Nguyên vật liệu sắp thiếu</div><div class="uc-period">Ngày · Factory/Nhóm hàng</div></div><div class="uc-item" id="u-uc21" onclick="pick('uc21',this)" style="border-color:#5a6b8c55;background:#f4f6f9"><div class="uc-id" style="color:#5a6b8c">UC21</div><div class="uc-name">Đánh giá nhà cung cấp theo giá / tiến độ / chất lượng</div><div class="uc-period">Tháng/Quý · Nhóm hàng/Nhà máy</div></div></div></div><div style="text-align:center;font-size:9px;color:#bbb;margin-top:6px">21 use-case AI · click để xem chi tiết vai trò / dòng chảy dữ liệu / lưu ý phân quyền</div></div>
+</div></div><div class="tabpage" id="tab-mart"><div class="dp-page"><div class="dp-section"><div class="dp-sec-title"><span class="hn2" style="background:#7c5cfc">Data Mart</span>6 Data Mart — Google BigQuery</div><div class="dp-cards" style="grid-template-columns:repeat(2,1fr)"><div class="dp-card" style="border-left:4px solid #7c5cfc"><div class="dp-card-title">Mart 1 — Tổng quan điều hành</div><div class="dp-card-sub">Google BigQuery · refresh theo giờ · BLĐ / BOD</div><div class="dp-card-body"><ul><li>KPI tổng hợp: doanh thu, doanh số, tồn kho, sản xuất, công nợ theo ngày/tuần/tháng</li><li>Cảnh báo vận hành tổng hợp từ các mart còn lại</li><li>Input cho AI Executive Summary (UC1–UC3)</li></ul></div></div><div class="dp-card" style="border-left:4px solid #7c5cfc"><div class="dp-card-title">Mart 2 — Sales &amp; Khách hàng</div><div class="dp-card-sub">Google BigQuery · refresh theo giờ · Sales · Marketing · CSKH</div><div class="dp-card-body"><ul><li>Doanh số, đơn hàng, khách hàng, đại lý/NPP theo khu vực, nhân viên</li><li>Giá bán, chiết khấu (Level L3 — hạn chế), khiếu nại khách hàng</li><li>Input cho AI Sales, Marketing, CSKH (UC4–6, 16–19)</li></ul></div></div><div class="dp-card" style="border-left:4px solid #7c5cfc"><div class="dp-card-title">Mart 3 — Tồn kho &amp; Kho vận</div><div class="dp-card-sub">Google BigQuery · refresh theo giờ · Kho · Logistics</div><div class="dp-card-body"><ul><li>Nhập – xuất – tồn theo SKU, theo kho</li><li>Đơn hàng chờ giao, vòng quay tồn kho</li><li>Input cho AI Kho / Logistics (UC10–12)</li></ul></div></div><div class="dp-card" style="border-left:4px solid #7c5cfc"><div class="dp-card-title">Mart 4 — Sản xuất</div><div class="dp-card-sub">Google BigQuery · refresh theo giờ · Sản xuất · Nhà máy</div><div class="dp-card-body"><ul><li>Sản lượng, kế hoạch vs thực tế, downtime, tỷ lệ lỗi theo nhà máy</li><li>Tiêu hao nguyên vật liệu theo SKU</li><li>Input cho AI Sản xuất, Mua hàng (UC13–15, 20–21)</li></ul></div></div><div class="dp-card" style="border-left:4px solid #7c5cfc"><div class="dp-card-title">Mart 5 — Tài chính</div><div class="dp-card-sub">Google BigQuery · refresh theo giờ · Kế toán · BLĐ</div><div class="dp-card-body"><ul><li>Doanh thu, giá vốn, công nợ phải thu/trả, chi phí, dòng tiền</li><li>Dữ liệu Level L3/L4 — chỉ Kế toán &amp; BLĐ truy cập đầy đủ</li><li>Input cho AI Tài chính (UC7–9)</li></ul></div></div><div class="dp-card" style="border-left:4px solid #7c5cfc"><div class="dp-card-title">Mart 6 — Danh mục dùng chung</div><div class="dp-card-sub">Google BigQuery · refresh theo giờ · Toàn hệ thống</div><div class="dp-card-body"><ul><li>Master data: SKU, khách hàng, đại lý, nhà cung cấp, kho, nhà máy, khu vực</li><li>Chuẩn hoá mã dùng chung, hỗ trợ join cho mọi mart</li><li>Làm nền cho phân quyền theo Data Scope</li></ul></div></div></div></div></div></div><script>const D={
+fasterp:{badge:'Nguồn · Fast ERP',name:'Fast ERP — Kế toán · Kho · HRM',tech:'API — có thể bổ sung theo yêu cầu',role:['Kế toán · Kho · HRM','Trạng thái kết nối: Có'],flow:['API/webhook → Data pipeline','Batch/real-time đồng bộ vào Data Lake'],note:['API — có thể bổ sung theo yêu cầu']},
+baserequest:{badge:'Nguồn · Base Request',name:'Base Request — Phê duyệt đề xuất / đề nghị',tech:'Base API (nội bộ Base.vn)',role:['Phê duyệt đề xuất / đề nghị','Trạng thái kết nối: Có'],flow:['API/webhook → Data pipeline','Batch/real-time đồng bộ vào Data Lake'],note:['Base API (nội bộ Base.vn)']},
+mobiwork:{badge:'Nguồn · MobiWork DMS',name:'MobiWork DMS — Quản lý phân phối · Sales thị trường',tech:'Open API/OAuth2 — cần cấp quyền, xác nhận tenant',role:['Quản lý phân phối · Sales thị trường','Trạng thái kết nối: Có điều kiện'],flow:['API/webhook → Data pipeline','Batch/real-time đồng bộ vào Data Lake'],note:['Open API/OAuth2 — cần cấp quyền, xác nhận tenant']},
+haravan:{badge:'Nguồn · Haravan',name:'Haravan — Omnichannel · Website bán hàng',tech:'Admin/Partner API, webhook',role:['Omnichannel · Website bán hàng','Trạng thái kết nối: Có'],flow:['API/webhook → Data pipeline','Batch/real-time đồng bộ vào Data Lake'],note:['Admin/Partner API, webhook']},
+omicall:{badge:'Nguồn · OmiCall / OMICRM',name:'OmiCall / OMICRM — Tổng đài',tech:'API, webhook, Web SDK đa kênh',role:['Tổng đài','Trạng thái kết nối: Có'],flow:['API/webhook → Data pipeline','Batch/real-time đồng bộ vào Data Lake'],note:['API, webhook, Web SDK đa kênh']},
+zalo:{badge:'Nguồn · Zalo OA',name:'Zalo OA — Khách hàng nhắn tin',tech:'OpenAPI + webhook — cần app/quyền',role:['Khách hàng nhắn tin','Trạng thái kết nối: Có điều kiện'],flow:['API/webhook → Data pipeline','Batch/real-time đồng bộ vào Data Lake'],note:['OpenAPI + webhook — cần app/quyền']},
+fb:{badge:'Nguồn · Facebook Messenger',name:'Facebook Messenger — Khách hàng nhắn tin qua Page',tech:'Meta Graph API — cần app/token',role:['Khách hàng nhắn tin qua Page','Trạng thái kết nối: Có điều kiện'],flow:['API/webhook → Data pipeline','Batch/real-time đồng bộ vào Data Lake'],note:['Meta Graph API — cần app/token']},
+m365:{badge:'Nguồn · Microsoft 365',name:'Microsoft 365 — Email · Lưu trữ (SharePoint) · Họp online (Teams)',tech:'Microsoft Graph API',role:['Email · Lưu trữ (SharePoint) · Họp online (Teams)','Trạng thái kết nối: Có'],flow:['API/webhook → Data pipeline','Batch/real-time đồng bộ vào Data Lake'],note:['Microsoft Graph API']},
+gworkspace:{badge:'Nguồn · Google Workspace',name:'Google Workspace — Email',tech:'Google Workspace API',role:['Email','Trạng thái kết nối: Có'],flow:['API/webhook → Data pipeline','Batch/real-time đồng bộ vào Data Lake'],note:['Google Workspace API']},
+hanet:{badge:'Nguồn · HANET AI Camera',name:'HANET AI Camera — Chấm công nhận diện khuôn mặt',tech:'RESTful API — cần xác nhận endpoint',role:['Chấm công nhận diện khuôn mặt','Trạng thái kết nối: Có điều kiện'],flow:['API/webhook → Data pipeline','Batch/real-time đồng bộ vào Data Lake'],note:['RESTful API — cần xác nhận endpoint']},
+basemd:{badge:'Nguồn · Base trung gian',name:'Base — Table / Workflow / Service',tech:'Nhập liệu thủ công → quy trình upload định kỳ vào Base',role:['Dữ liệu KHÔNG có API, hoặc phần mềm sắp dừng sử dụng'],flow:['Nhập liệu tay vào Base Table/Workflow/Service','Base đẩy dữ liệu → Data pipeline → Data Lake'],note:['Áp dụng cho dữ liệu không có API hoặc khi dừng dùng phần mềm hiện tại']},
+lake:{badge:'Lưu trữ · Data Lake',name:'Data Lake — Google BigQuery',tech:'BigQuery · append-only · immutable',role:['Lưu toàn bộ dữ liệu thô từ 8+ nguồn','Không sửa/xoá — lưu lịch sử để truy vết','Làm lớp đệm trước khi chuẩn hoá sang DWH'],flow:['Pipeline append-only write','ETL sang Data Warehouse'],note:['Partition theo ngày/tháng · Đông Dương Sài Gòn sở hữu dữ liệu']},
+dwh:{badge:'Lưu trữ · Warehouse',name:'Data Warehouse — Google BigQuery',tech:'BigQuery · SQL · chuẩn hoá',role:['Chuẩn hoá theo mô hình fact/dimension','Đối chiếu và hợp nhất các nguồn dữ liệu','Làm nền cho data mart, báo cáo và AI'],flow:['ETL từ Lake → Warehouse','Build mart phục vụ BI và AI'],note:['Single source of truth · RLS áp dụng tại đây']},
+mon:{badge:'Giám sát',name:'Monitoring',tech:'Google Cloud Monitoring',role:['Theo dõi pipeline, job ETL, độ trễ cập nhật','Phát hiện lỗi đồng bộ hoặc nghẽn hệ thống'],flow:['Theo dõi toàn bộ pipeline'],note:['Giúp vận hành ổn định']},
+gmail:{badge:'Cảnh báo',name:'Mail alerting',tech:'Gmail',role:['Gửi cảnh báo lỗi pipeline','Thông báo sự cố dữ liệu/job thất bại'],flow:['Monitoring trigger → email'],note:['Dành cho đội triển khai/vận hành']},
+basealert:{badge:'Cảnh báo',name:'Base Message',tech:'Base webhook',role:['Đẩy cảnh báo sang Base để phối hợp xử lý','Thông báo vấn đề ảnh hưởng vận hành'],flow:['Monitoring trigger → Base message'],note:['Phù hợp với người dùng nội bộ']},
+backlog:{badge:'Dự phòng',name:'Backlog storage',tech:'PostgreSQL',role:['Lưu backlog/retry khi pipeline lỗi','Giữ dữ liệu tạm chờ xử lý lại'],flow:['Pipeline lỗi → lưu backlog','Job retry xử lý lại về sau'],note:['DLQ · retry']},
+mart1:{badge:'Datamart 1',name:'Datamart 1 — Tổng quan điều hành',tech:'Google BigQuery · refresh/giờ',role:['KPI tổng hợp toàn công ty: doanh thu, doanh số, tồn kho, sản xuất, công nợ, cảnh báo vận hành'],flow:['Build từ Data Warehouse','Phục vụ AI use-case tương ứng vai trò'],note:['Dành cho: BLĐ / BOD']},
+mart2:{badge:'Datamart 2',name:'Datamart 2 — Sales & Khách hàng',tech:'Google BigQuery · refresh/giờ',role:['Doanh số, khách hàng, đại lý/NPP, đơn hàng, giá bán, chiết khấu, khiếu nại'],flow:['Build từ Data Warehouse','Phục vụ AI use-case tương ứng vai trò'],note:['Dành cho: Sales · Marketing · CSKH']},
+mart3:{badge:'Datamart 3',name:'Datamart 3 — Tồn kho & Kho vận',tech:'Google BigQuery · refresh/giờ',role:['Nhập – xuất – tồn theo SKU/kho, đơn hàng chờ giao, tồn kho theo khu vực'],flow:['Build từ Data Warehouse','Phục vụ AI use-case tương ứng vai trò'],note:['Dành cho: Kho · Logistics']},
+mart4:{badge:'Datamart 4',name:'Datamart 4 — Sản xuất',tech:'Google BigQuery · refresh/giờ',role:['Sản lượng, kế hoạch vs thực tế, chất lượng, nguyên vật liệu, năng suất, downtime'],flow:['Build từ Data Warehouse','Phục vụ AI use-case tương ứng vai trò'],note:['Dành cho: Sản xuất · Nhà máy']},
+mart5:{badge:'Datamart 5',name:'Datamart 5 — Tài chính',tech:'Google BigQuery · refresh/giờ',role:['Doanh thu, giá vốn, công nợ phải thu/trả, chi phí, dòng tiền'],flow:['Build từ Data Warehouse','Phục vụ AI use-case tương ứng vai trò'],note:['Dành cho: Kế toán · BLĐ']},
+mart6:{badge:'Datamart 6',name:'Datamart 6 — Danh mục dùng chung',tech:'Google BigQuery · refresh/giờ',role:['Master data: SKU, khách hàng, đại lý, nhà cung cấp, kho, nhà máy, khu vực'],flow:['Build từ Data Warehouse','Phục vụ AI use-case tương ứng vai trò'],note:['Dành cho: Toàn hệ thống']},
+uc1:{badge:'UC1 · Ngày/Tuần',name:'AI Executive Summary toàn công ty',tech:'Mart 1+2+3+4+5 · Scope: Company',role:['Tự động tổng hợp KPI vận hành toàn công ty','Nêu điểm nổi bật, rủi ro và cảnh báo cần chú ý'],flow:['AI tổng hợp mart 1–5 thành narrative','Gửi định kỳ cho BLĐ qua Base/Mail'],note:['Scope: Company · Level: L1-L3 (tuỳ phần)']},
+uc2:{badge:'UC2 · Tuần',name:'AI đề xuất hành động ưu tiên xử lý',tech:'Mart 1+2+3+4+5 · Scope: Company',role:['Tổng hợp các vấn đề nổi bật trong tuần','Ưu tiên theo mức độ ảnh hưởng & khẩn cấp'],flow:['AI dựa trên cảnh báo & quy tắc nghiệp vụ'],note:['Decision support cho BLĐ']},
+uc3:{badge:'UC3 · Real-time',name:'AI hỏi đáp tự do toàn công ty (Chat với dữ liệu)',tech:'Tất cả 6 mart · Scope: Company',role:['Hỏi đáp tiếng Việt về mọi domain: sales, kho, sản xuất, tài chính','Không cần biết SQL hay mở nhiều dashboard'],flow:['User hỏi → Claude → SQL → BigQuery → trả lời theo scope'],note:['Duy nhất role BLĐ có Scope = Company không giới hạn']},
+uc4:{badge:'UC4 · Ngày',name:'Doanh số & đơn hàng mới hôm nay theo khu vực',tech:'Mart 2 · Scope: Region',role:['Tổng hợp doanh số, số đơn hàng mới trong ngày','Theo khu vực / địa bàn phụ trách'],flow:['AI đọc mart_sales theo ngày, filter theo scope Sales'],note:['Scope: Region hoặc Personal tuỳ cấp']},
+uc5:{badge:'UC5 · Tuần',name:'Top khách hàng / đại lý tăng - giảm doanh số',tech:'Mart 2 · Scope: Region / Personal',role:['Xếp hạng khách hàng, đại lý theo biến động doanh số','Cảnh báo đại lý giảm doanh số mạnh'],flow:['AI đọc mart_sales tuần, so sánh kỳ trước'],note:['Sales Executive chỉ thấy khách hàng mình phụ trách']},
+uc6:{badge:'UC6 · Tháng/Quý',name:'Khách hàng / đại lý có nguy cơ rời bỏ',tech:'Mart 2 + 6 · Scope: Region',role:['Phát hiện khách hàng lâu không mua','Đề xuất chăm sóc lại theo khu vực'],flow:['AI join mart_sales + master data khách hàng'],note:['Hỗ trợ Sales Manager giữ chân khách hàng']},
+uc7:{badge:'UC7 · Ngày',name:'Công nợ phải thu đến hạn',tech:'Mart 5 · Scope: Company 🔒',role:['Theo dõi khoản phải thu / phải trả đến hạn','Cảnh báo rủi ro dòng tiền ngắn hạn'],flow:['AI đọc mart_finance theo kỳ hạn'],note:['Dữ liệu nhạy cảm — Level L3, chỉ Kế toán & BLĐ']},
+uc8:{badge:'UC8 · Tuần',name:'Doanh thu – giá vốn – lợi nhuận gộp',tech:'Mart 5 · Scope: Company 🔒',role:['Tổng hợp doanh thu, giá vốn, lợi nhuận gộp theo tuần','So sánh theo khu vực / nhóm sản phẩm'],flow:['AI đọc mart_finance tuần'],note:['Sales không có quyền truy cập domain này']},
+uc9:{badge:'UC9 · Tháng/Quý',name:'Ngân sách vs chi phí thực tế',tech:'Mart 5 · Scope: Company 🔒',role:['So sánh ngân sách với chi phí thực tế','Phân tích vượt ngân sách theo khoản mục'],flow:['AI đọc mart_finance + ngân sách kế hoạch'],note:['Quản trị chi phí — Level L4 cho chi tiết chi phí mua hàng']},
+uc10:{badge:'UC10 · Ngày',name:'Cảnh báo SKU sắp hết hàng',tech:'Mart 3 · Scope: Branch/Warehouse',role:['Phát hiện SKU dưới ngưỡng tồn','Chỉ ra kho cần bổ sung hàng'],flow:['AI đọc tồn kho + ngưỡng cảnh báo theo kho'],note:['Thủ kho chỉ thấy kho mình phụ trách']},
+uc11:{badge:'UC11 · Tuần',name:'Nhập – xuất – tồn theo kho',tech:'Mart 3 · Scope: Branch/Warehouse',role:['Tổng hợp nhập, xuất, tồn theo kho trong tuần','Nêu biến động SKU chính'],flow:['AI đọc mart_inventory theo tuần'],note:['Không được hỏi tổng tồn kho toàn hệ thống']},
+uc12:{badge:'UC12 · Tháng/Quý',name:'Vòng quay tồn kho & hàng tồn lâu',tech:'Mart 3 · Scope: Branch/Warehouse',role:['Phân tích vòng quay và tuổi tồn kho','Xác định SKU tồn chậm luân chuyển'],flow:['AI đọc mart_inventory monthly'],note:['Tối ưu mức tồn kho theo kho']},
+uc13:{badge:'UC13 · Ngày',name:'Sản lượng hôm nay vs kế hoạch',tech:'Mart 4 · Scope: Factory',role:['Tóm tắt sản lượng hoàn thành trong ngày','So với kế hoạch ngày/tuần'],flow:['AI đọc mart_production theo ngày'],note:['Theo nhà máy mình phụ trách']},
+uc14:{badge:'UC14 · Tuần',name:'Tỷ lệ lỗi / chất lượng theo SKU & máy',tech:'Mart 4 · Scope: Factory',role:['Phân tích tỷ lệ lỗi, scrap/reject theo SKU và máy','Cảnh báo máy có tỷ lệ lỗi tăng'],flow:['AI đọc mart_production tuần'],note:['Hỗ trợ QA/QC']},
+uc15:{badge:'UC15 · Tháng/Quý',name:'Hiệu suất & downtime theo nhà máy',tech:'Mart 4 · Scope: Factory',role:['So sánh năng suất, downtime giữa các nhà máy','Xác định nguyên nhân downtime chính'],flow:['AI đọc mart_production monthly'],note:['Dùng cho Production Manager & BLĐ']},
+uc16:{badge:'UC16 · Tuần',name:'Hiệu quả chương trình / campaign theo khu vực',tech:'Mart 2 · Scope: Region/Brand',role:['Đo hiệu quả campaign theo khu vực, kênh','So sánh doanh số trước/sau chương trình'],flow:['AI đọc mart_sales gắn với campaign'],note:['Không truy cập domain Tài chính/Sản xuất']},
+uc17:{badge:'UC17 · Tháng/Quý',name:'Doanh số theo sản phẩm / brand',tech:'Mart 2 + 6 · Scope: Region/Brand',role:['Phân tích doanh số theo nhóm sản phẩm/brand','Định hướng chiến dịch tiếp theo'],flow:['AI join mart_sales + master data sản phẩm'],note:['Theo thị trường/brand phụ trách']},
+uc18:{badge:'UC18 · Ngày',name:'Khiếu nại / ticket chưa xử lý & SLA',tech:'Mart 2 · Scope: Personal/Assigned',role:['Danh sách ticket chưa xử lý, sắp quá SLA','Ưu tiên theo mức độ nghiêm trọng'],flow:['AI đọc mart_customer_service theo ngày'],note:['Chỉ thấy khách hàng/đơn hàng đang xử lý']},
+uc19:{badge:'UC19 · Tuần',name:'Top complaint theo sản phẩm / khu vực',tech:'Mart 2 · Scope: Region',role:['Thống kê khiếu nại theo sản phẩm, khu vực','Phát hiện vấn đề chất lượng lặp lại'],flow:['AI đọc mart_customer_service tuần'],note:['CSKH không có quyền truy cập domain Tài chính']},
+uc20:{badge:'UC20 · Ngày',name:'Nguyên vật liệu sắp thiếu',tech:'Mart 4 + 6 · Scope: Factory/Nhóm hàng',role:['Phát hiện nguyên vật liệu dưới ngưỡng tồn','Chỉ ra nhà máy/nhóm hàng cần đặt thêm'],flow:['AI đọc mart_production + mart_master'],note:['Theo nhóm hàng/nhà máy phụ trách']},
+uc21:{badge:'UC21 · Tháng/Quý',name:'Đánh giá nhà cung cấp theo giá / tiến độ / chất lượng',tech:'Mart 4 + 6 · Scope: Nhóm hàng/Nhà máy',role:['Đánh giá nhà cung cấp theo giá, tiến độ, chất lượng','Xác định nhà cung cấp có vấn đề'],flow:['AI join mart_production + mart_master'],note:['Chi phí mua hàng là dữ liệu Level L4 — chỉ xem giới hạn']}
+};</script>
+<script>
+function goTab(id){
+  const a=document.querySelector('.tabnav a[data-tab="'+id+'"]');
+  if(a) switchTab(id, a);
+}
+/* ── Technical animated connectors: Data Warehouse -> Data Mart (Dataform) ── */
+const MART_DOTS=[];
+function getRect(container,id){
+  const el=document.getElementById(id);
+  if(!el)return null;
+  const c=container.getBoundingClientRect();
+  const r=el.getBoundingClientRect();
+  return{cx:r.left-c.left+r.width/2, cy:r.top-c.top+r.height/2, rx:r.left-c.left+r.width, lx:r.left-c.left};
+}
+function martConn(svg,x1,y1,x2,y2,color,dur,delay){
+  const ns='http://www.w3.org/2000/svg';
+  const mx=(x1+x2)/2;
+  const d=`M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`;
+  const path=document.createElementNS(ns,'path');
+  path.setAttribute('d',d);path.setAttribute('fill','none');
+  path.setAttribute('stroke',color);path.setAttribute('stroke-width','2');
+  path.setAttribute('opacity','0.5');
+  path.setAttribute('marker-end','url(#ah-mart)');
+  svg.appendChild(path);
+  const dot=document.createElementNS(ns,'circle');
+  dot.setAttribute('r','4');dot.setAttribute('fill',color);dot.setAttribute('opacity','0');
+  svg.appendChild(dot);
+  MART_DOTS.push({dot,path,dur:dur*1000,delay:delay*1000,start:null});
+}
+function martLabel(svg,x,y,text,color){
+  const ns='http://www.w3.org/2000/svg';
+  const tx=document.createElementNS(ns,'text');
+  tx.setAttribute('x',x);tx.setAttribute('y',y);
+  tx.setAttribute('text-anchor','middle');tx.setAttribute('font-size','9.5');
+  tx.setAttribute('fill',color);tx.setAttribute('font-weight','700');
+  tx.setAttribute('font-family','Be Vietnam Pro,sans-serif');
+  tx.textContent=text;
+  svg.appendChild(tx);
+}
+function animMartDots(ts){
+  MART_DOTS.forEach(d=>{
+    if(d.start===null){
+      if(ts<d.delay){d.dot.setAttribute('opacity','0');return;}
+      d.start=ts-d.delay;
+    }
+    const elapsed=(ts-d.start)%d.dur;
+    const t=elapsed/d.dur;
+    const len=d.path.getTotalLength();
+    if(!len)return;
+    const pt=d.path.getPointAtLength(t*len);
+    d.dot.setAttribute('cx',pt.x);d.dot.setAttribute('cy',pt.y);
+    d.dot.setAttribute('opacity', t<0.05||t>0.95?'0':'1');
+  });
+  requestAnimationFrame(animMartDots);
+}
+function drawMartConnectors(){
+  const row=document.querySelector('.martai-row');
+  const svg=document.getElementById('mart-overlay');
+  const houseEl=document.getElementById('dw-house-el');
+  if(!row||!svg||!houseEl)return;
+  while(svg.lastChild && svg.lastChild.tagName!=='defs')svg.removeChild(svg.lastChild);
+  MART_DOTS.length=0;
+  svg.setAttribute('width',row.offsetWidth);
+  svg.setAttribute('height',row.offsetHeight);
+  const rowRect=row.getBoundingClientRect();
+  const hRect=houseEl.getBoundingClientRect();
+  const dwhX=hRect.right-rowRect.left;
+  const dwhY=(hRect.top+hRect.height/2)-rowRect.top;
+  const martIds=['mart1','mart2','mart3','mart4','mart5','mart6'];
+  martIds.forEach((id,i)=>{
+    const m=getRect(row,'mc-'+id);
+    if(!m)return;
+    martConn(svg,dwhX,dwhY,m.lx,m.cy,'#7c5cfc',2.4,i*0.28);
+  });
+  martLabel(svg,dwhX+26,dwhY-8,'Dataform · SQL','#7c5cfc');
+  requestAnimationFrame(animMartDots);
+}
+window.addEventListener('load',()=>setTimeout(drawMartConnectors,350));
+window.addEventListener('resize',()=>{MART_DOTS.length=0;drawMartConnectors();});
+/* ── Connectors: Data Sources -> Data Warehouse ── */
+function drawSourceConnectors(){
+  const wrap=document.querySelector('.sol-zones');
+  const svg=document.getElementById('source-overlay');
+  const dwh=document.getElementById('dw-house-el');
+  const zleft=document.querySelector('.zone-left .zone-box');
+  if(!wrap||!svg||!dwh||!zleft)return;
+  while(svg.lastChild && svg.lastChild.tagName!=='defs')svg.removeChild(svg.lastChild);
+  svg.setAttribute('width',wrap.offsetWidth);
+  svg.setAttribute('height',wrap.offsetHeight);
+  const wrapRect=wrap.getBoundingClientRect();
+  const dRect=dwh.getBoundingClientRect();
+  const zRect=zleft.getBoundingClientRect();
+  const dwhX=dRect.left-wrapRect.left;
+  const dwhY=(dRect.top+dRect.height*0.22)-wrapRect.top;
+  const zLeftEdge=zRect.right-wrapRect.left;
+  const gapAvail=Math.max(dwhX-zLeftEdge,40);
+  const cx=zLeftEdge+Math.min(22,gapAvail*0.4);
+  const ctrlX=Math.min(cx+16,dwhX-24);
+  const cy=(zRect.top-wrapRect.top)+(zRect.height/2);
+  const ns='http://www.w3.org/2000/svg';
+  const chips=document.querySelectorAll('.zone-left .src-chip');
+  chips.forEach((chip)=>{
+    const r=chip.getBoundingClientRect();
+    const x1=r.right-wrapRect.left;
+    const y1=(r.top+r.height/2)-wrapRect.top;
+    const mx=x1+(cx-x1)*0.6;
+    const d=`M${x1},${y1} C${mx},${y1} ${mx},${cy} ${cx},${cy}`;
+    const path=document.createElementNS(ns,'path');
+    path.setAttribute('d',d);path.setAttribute('fill','none');
+    path.setAttribute('stroke','#5a86f0');path.setAttribute('stroke-width','1.6');
+    path.setAttribute('stroke-dasharray','4,4');path.setAttribute('opacity','0.55');
+    svg.appendChild(path);
+  });
+  const trunk=document.createElementNS(ns,'path');
+  trunk.setAttribute('d',`M${cx},${cy} C${ctrlX},${cy} ${ctrlX},${dwhY} ${dwhX-14},${dwhY}`);
+  trunk.setAttribute('fill','none');
+  trunk.setAttribute('stroke','#3d6ef5');trunk.setAttribute('stroke-width','2.6');
+  trunk.setAttribute('opacity','0.9');
+  svg.appendChild(trunk);
+  const dot=document.createElementNS(ns,'circle');
+  dot.setAttribute('cx',cx);dot.setAttribute('cy',cy);dot.setAttribute('r','4');
+  dot.setAttribute('fill','#3d6ef5');
+  svg.appendChild(dot);
+  const arrow=document.createElementNS(ns,'path');
+  arrow.setAttribute('d',`M${dwhX-19},${dwhY-8} L${dwhX-19},${dwhY+8} L${dwhX-3},${dwhY} Z`);
+  arrow.setAttribute('fill','#3d6ef5');
+  svg.appendChild(arrow);
+}
+window.addEventListener('load',()=>setTimeout(drawSourceConnectors,350));
+window.addEventListener('resize',()=>drawSourceConnectors());
+let cur=null;
+function pick(id, el){
+  document.querySelectorAll('.bx,.sbox,.uc-item,.src-card,.mart-card,.dw-domrow').forEach(e=>e.classList.remove('active'));
+  const dr=document.getElementById('drawer');
+  if(cur===id){cur=null;dr.style.display='none';return;}
+  cur=id;
+  if(el) el.classList.add('active');
+  const a=D[id];if(!a)return;
+  document.getElementById('db').textContent=a.badge||'';
+  document.getElementById('dn').textContent=a.name;
+  document.getElementById('dt').textContent=a.tech;
+  const cols=[{l:'Vai trò / Nội dung',r:a.role||[]},{l:'Dòng chảy dữ liệu',r:a.flow||[]},{l:'Lưu ý',r:a.note||[]}];
+  document.getElementById('dd').innerHTML=cols.map(c=>`
+    <div><div class="dlbl">${c.l}</div>
+    ${c.r.map(r=>`<div class="drow"><div class="ddot"></div><div class="dtext">${r}</div></div>`).join('')}
+    </div>`).join('');
+  const dr2=document.getElementById('drawer');
+  dr2.style.display='block';
+  dr2.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function close_(){cur=null;document.getElementById('drawer').style.display='none';document.querySelectorAll('.bx,.sbox,.uc-item,.src-card,.mart-card,.dw-domrow').forEach(e=>e.classList.remove('active'));}
+function switchTab(id,el){
+  document.querySelectorAll('.tabpage').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tabnav a').forEach(a=>a.classList.remove('on'));
+  document.getElementById('tab-'+id).classList.add('on');
+  el.classList.add('on');
+}
+</script>
+<div class="drawer" id="drawer">
+  <div class="dhead">
+    <div class="dbadge" id="db"></div>
+    <div><div class="dname" id="dn"></div><div class="dtech" id="dt"></div></div>
+    <div class="dclose" onclick="close_()">✕</div>
+  </div>
+  <div class="dbody" id="dd"></div>
+</div>
+</div></body></html>
